@@ -11,7 +11,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Three.js Libraries for 3D STL Rendering -->
+    <!-- Three.js Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -76,11 +76,6 @@
             box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
         }
 
-        .glow-turquoise-hover:hover {
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.45);
-            border-color: #00E5FF !important;
-        }
-
         .skew-box {
             transform: skewX(-12deg);
         }
@@ -89,7 +84,7 @@
             transform: skewX(12deg);
         }
 
-        /* Dark Card Styling */
+        /* Card Styling */
         .dark .glass-black-card {
             background: rgba(8, 12, 14, 0.95) !important;
             backdrop-filter: blur(12px);
@@ -97,9 +92,8 @@
             color: #e2e8f0;
         }
 
-        /* Light Card Styling */
         .glass-black-card {
-            background: rgba(255, 255, 255, 0.9) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 131, 143, 0.3);
             color: #0f172a;
@@ -160,7 +154,7 @@
 
                 <div class="hidden md:flex items-center space-x-4">
                     <!-- Theme Toggle Button -->
-                    <button id="theme-toggle" class="w-10 h-10 rounded-full border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-400/20 flex items-center justify-center transition-all">
+                    <button id="theme-toggle" class="w-10 h-10 rounded-full border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-400/20 flex items-center justify-center transition-all cursor-pointer" title="Toggle Light/Dark Theme">
                         <i id="theme-toggle-icon" class="fa-solid fa-moon text-lg"></i>
                     </button>
 
@@ -307,63 +301,69 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT: THEME TOGGLE & THREE.JS VIEWER -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- LIGHT / DARK THEME SYSTEM WITH SYSTEM PREFERENCE DETECTION ---
         const html = document.documentElement;
-        const themeBtn = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-toggle-icon');
-        const themeBtnMobile = document.getElementById('theme-toggle-mobile');
-        const themeIconMobile = document.getElementById('theme-toggle-icon-mobile');
+        let scene, camera, renderer, controls, carMesh;
 
-        function setTheme(isDark) {
+        // --- SAFE THEME TOGGLE LOGIC ---
+        function updateThemeUI(isDark) {
+            const icon = document.getElementById('theme-toggle-icon');
+            const iconMobile = document.getElementById('theme-toggle-icon-mobile');
+            
             if (isDark) {
                 html.classList.add('dark');
-                if(themeIcon) themeIcon.className = 'fa-solid fa-sun text-yellow-400 text-lg';
-                if(themeIconMobile) themeIconMobile.className = 'fa-solid fa-sun text-yellow-400 text-base';
+                if (icon) icon.className = 'fa-solid fa-sun text-yellow-400 text-lg';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-yellow-400 text-base';
                 localStorage.setItem('theme', 'dark');
             } else {
                 html.classList.remove('dark');
-                if(themeIcon) themeIcon.className = 'fa-solid fa-moon text-slate-700 text-lg';
-                if(themeIconMobile) themeIconMobile.className = 'fa-solid fa-moon text-slate-700 text-base';
+                if (icon) icon.className = 'fa-solid fa-moon text-slate-700 text-lg';
+                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-slate-700 text-base';
                 localStorage.setItem('theme', 'light');
             }
-            if (scene) updateViewerBackground(isDark);
+
+            if (carMesh) {
+                carMesh.material.color.setHex(isDark ? 0x00E5FF : 0x00838F);
+            }
         }
 
-        // Detect System Preference or Local Storage
+        // Initialize Theme from System or Storage
         const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            setTheme(true);
-        } else {
-            setTheme(false);
-        }
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialDark = savedTheme ? savedTheme === 'dark' : systemDark;
+        updateThemeUI(initialDark);
 
         function toggleTheme() {
-            const isCurrentDark = html.classList.contains('dark');
-            setTheme(!isCurrentDark);
+            const isDark = html.classList.contains('dark');
+            updateThemeUI(!isDark);
         }
 
-        if(themeBtn) themeBtn.addEventListener('click', toggleTheme);
-        if(themeBtnMobile) themeBtnMobile.addEventListener('click', toggleTheme);
+        // Attach listeners after DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.getElementById('theme-toggle');
+            const themeBtnMobile = document.getElementById('theme-toggle-mobile');
+            if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+            if (themeBtnMobile) themeBtnMobile.addEventListener('click', toggleTheme);
+            
+            init3DViewer();
+        });
 
-        // --- THREE.JS 3D STL VIEWER LOGIC ---
-        let scene, camera, renderer, controls, carMesh, dirLight1, dirLight2;
-        const container = document.getElementById('viewer-container');
+        // --- THREE.JS STL VIEWER ---
+        function init3DViewer() {
+            const container = document.getElementById('viewer-container');
+            if (!container) return;
 
-        function initViewer() {
             scene = new THREE.Scene();
 
             camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
 
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            // OrbitControls setup (Pan disabled)
+            // OrbitControls setup (Panning disabled)
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
@@ -372,29 +372,22 @@
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
             scene.add(ambientLight);
 
-            dirLight1 = new THREE.DirectionalLight(0x00E5FF, 1.2);
+            const dirLight1 = new THREE.DirectionalLight(0x00E5FF, 1.2);
             dirLight1.position.set(1, 2, 1).normalize();
             scene.add(dirLight1);
 
-            dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+            const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
             dirLight2.position.set(-1, -1, -1).normalize();
             scene.add(dirLight2);
 
-            window.addEventListener('resize', onWindowResize);
-            loadSTLModel();
-            animate();
-        }
+            window.addEventListener('resize', () => {
+                if (!container) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
 
-        function updateViewerBackground(isDark) {
-            if (!carMesh) return;
-            if (isDark) {
-                carMesh.material.color.setHex(0x00E5FF);
-            } else {
-                carMesh.material.color.setHex(0x00838F);
-            }
-        }
-
-        function loadSTLModel() {
+            // Load STL File
             const loader = new THREE.STLLoader();
             loader.load('car.stl', function(geometry) {
                 geometry.computeVertexNormals();
@@ -409,47 +402,45 @@
 
                 carMesh = new THREE.Mesh(geometry, material);
 
-                // --- FIX MODEL ORIENTATION (Z-Up to Y-Up Fix) ---
-                carMesh.rotation.x = -Math.PI / 2; // Rotates car -90 degrees so it lies flat!
-                
-                // Group to center correctly
-                const box = new THREE.Box3().setFromObject(carMesh);
-                const center = box.getCenter(new THREE.Vector3());
+                // --- ROTATE MODEL TO BE HORIZONTAL ---
+                carMesh.rotation.x = -Math.PI / 2;
+
+                // Center Model
+                geometry.computeBoundingBox();
+                const center = new THREE.Vector3();
+                geometry.boundingBox.getCenter(center);
                 carMesh.position.sub(center);
 
                 const group = new THREE.Group();
                 group.add(carMesh);
                 scene.add(group);
 
-                // Adjust camera distance nicely
-                const size = box.getSize(new THREE.Vector3());
+                // Auto Camera Distance
+                const size = new THREE.Vector3();
+                geometry.boundingBox.getSize(size);
                 const maxDim = Math.max(size.x, size.y, size.z);
                 camera.position.set(maxDim * 1.8, maxDim * 1.2, maxDim * 1.8);
                 controls.target.set(0, 0, 0);
                 controls.update();
 
-                document.getElementById('loading-spinner').classList.add('hidden');
-                document.getElementById('viewer-status').innerText = 'car.stl Loaded!';
+                // Hide Spinner
+                const spinner = document.getElementById('loading-spinner');
+                const status = document.getElementById('viewer-status');
+                if (spinner) spinner.classList.add('hidden');
+                if (status) status.innerText = 'car.stl Loaded!';
             }, undefined, function(error) {
                 console.error(error);
-                document.getElementById('loading-spinner').innerHTML = '<p class="text-red-400 font-racing text-xs">Error loading car.stl</p>';
+                const status = document.getElementById('viewer-status');
+                if (status) status.innerText = 'Error loading car.stl';
             });
-        }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
         }
-
-        function onWindowResize() {
-            if (!container) return;
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        }
-
-        window.addEventListener('DOMContentLoaded', initViewer);
     </script>
 </body>
 </html>
