@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aerial F1 - The Indian High School, Oud Metha</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080c0e'/%3E%3Ctext x='7' y='46' font-family='Arial,sans-serif' font-size='32' font-weight='900' font-style='italic' fill='%2300e5ff'%3EF1%3C/text%3E%3C/svg%3E">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -520,7 +521,7 @@
                 </div>
 
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/40 dark:border-cyan-400/40 relative flex flex-col justify-between">
-                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 03</div>
+                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 02</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-cyan-600 dark:text-cyan-400">
                             <i class="fa-solid fa-bolt text-2xl"></i>
@@ -536,17 +537,18 @@
                 </div>
 
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-500 dark:border-cyan-400 relative flex flex-col justify-between glow-turquoise-sm">
-                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 04</div>
+                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 03</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-cyan-600 dark:text-cyan-400">
                             <i class="fa-solid fa-calculator text-2xl"></i>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white uppercase">Physical Properties</h4>
                         </div>
+                        <p class="text-xs text-amber-600 dark:text-amber-300 font-mono leading-relaxed">Work in progress: final values may change when the school-provided wheels and axles are added. Current figures are chassis estimates only.</p>
                         <div class="space-y-2 font-mono text-xs">
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Material Name:</span><span class="text-cyan-600 dark:text-cyan-300 font-bold">Plywood, Sheathing</span></div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Mass:</span><span class="text-slate-900 dark:text-white">84.037 g</span></div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Volume:</span><span class="text-slate-900 dark:text-white">152200 mm³</span></div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Density:</span><span class="text-slate-900 dark:text-white">0.001 g/mm³</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Chassis Material:</span><span class="text-cyan-600 dark:text-cyan-300 font-bold">Plywood, Sheathing</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Chassis Mass (est.):</span><span class="text-slate-900 dark:text-white">84.037 g</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Chassis Volume (est.):</span><span class="text-slate-900 dark:text-white">152200 mm³</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-slate-500 dark:text-gray-400">Chassis Density (est.):</span><span class="text-slate-900 dark:text-white">0.000552 g/mm³</span></div>
                         </div>
                     </div>
                 </div>
@@ -670,7 +672,8 @@
     <!-- FOOTER -->
     <footer class="border-t border-cyan-500/30 dark:border-cyan-400/30 py-8 text-center text-xs text-slate-500 dark:text-gray-400 font-mono">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
-            <p>© 2026 Aerial F1 - The Indian High School, Oud Metha. Website designed & developed by Krishna Ajayesh.</p>
+            <p>© 2026 Aerial F1 - The Indian High School, Oud Metha. Website designed & developed by Navtej Tharayil.</p>
+            <p>AI tools were used to assist with website creation.</p>
         </div>
     </footer>
 
@@ -882,20 +885,20 @@
                 carMesh = new THREE.Mesh(geometry, material);
                 carMesh.rotation.x = -Math.PI / 2;
 
-                geometry.computeBoundingBox();
-                const center = new THREE.Vector3();
-                geometry.boundingBox.getCenter(center);
-                carMesh.position.sub(center);
-
                 const group = new THREE.Group();
                 group.add(carMesh);
                 scene.add(group);
 
+                const bounds = new THREE.Box3().setFromObject(group);
+                const center = bounds.getCenter(new THREE.Vector3());
+                group.position.sub(center);
+
                 const size = new THREE.Vector3();
-                geometry.boundingBox.getSize(size);
+                bounds.getSize(size);
                 const maxDim = Math.max(size.x, size.y, size.z);
                 camera.position.set(maxDim * 1.8, maxDim * 1.2, maxDim * 1.8);
                 controls.target.set(0, 0, 0);
+                camera.lookAt(0, 0, 0);
                 controls.update();
 
                 const spinner = document.getElementById('loading-spinner');
