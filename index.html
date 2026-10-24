@@ -47,7 +47,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Carbon Grid Background - Dark */
         .dark .carbon-grid {
             background-color: #000000;
             background-image: 
@@ -57,7 +56,6 @@
             background-size: 32px 32px, 16px 16px, 16px 16px;
         }
 
-        /* Carbon Grid Background - Light */
         .carbon-grid {
             background-color: #f8fafc;
             background-image: 
@@ -67,18 +65,12 @@
             background-size: 32px 32px, 16px 16px, 16px 16px;
         }
 
-        /* Glow Effects */
         .glow-turquoise {
             box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
         }
 
         .glow-turquoise-sm {
             box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
-        }
-
-        .glow-turquoise-hover:hover {
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.45);
-            border-color: #00E5FF !important;
         }
 
         .skew-box {
@@ -89,7 +81,6 @@
             transform: skewX(12deg);
         }
 
-        /* Card Styling */
         .dark .glass-black-card {
             background: rgba(8, 12, 14, 0.95) !important;
             backdrop-filter: blur(12px);
@@ -126,19 +117,15 @@
             background: #00838F;
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00E5FF;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between carbon-grid bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
-    <!-- MAIN STICKY NAVIGATION BAR -->
+    <!-- NAVIGATION BAR -->
     <nav class="bg-white/90 dark:bg-black/95 border-b border-cyan-500/30 dark:border-cyan-400/30 sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <!-- Logo -->
                 <a href="#home" class="flex items-center space-x-3 group">
                     <div class="flex flex-col">
                         <span class="font-orbitron font-black text-2xl sm:text-3xl tracking-widest text-slate-900 dark:text-white leading-none">
@@ -148,7 +135,6 @@
                     </div>
                 </a>
 
-                <!-- Nav Links -->
                 <div class="hidden lg:flex space-x-6 font-racing uppercase tracking-wider text-sm font-semibold">
                     <a href="#home" class="text-cyan-600 dark:text-cyan-400 hover:text-black dark:hover:text-white transition-colors">Home</a>
                     <a href="#about" class="text-slate-600 dark:text-gray-300 hover:text-cyan-500 transition-colors">About Us</a>
@@ -159,9 +145,7 @@
                     <a href="#contact" class="text-slate-600 dark:text-gray-300 hover:text-cyan-500 transition-colors">Contact</a>
                 </div>
 
-                <!-- Controls & Social -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <!-- Theme Toggle Button -->
                     <button id="theme-toggle" class="w-10 h-10 rounded-full border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-400/20 flex items-center justify-center transition-all cursor-pointer" title="Toggle Light/Dark Theme">
                         <i id="theme-toggle-icon" class="fa-solid fa-moon text-lg"></i>
                     </button>
@@ -189,7 +173,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-black border-b border-cyan-400/30 px-6 pt-3 pb-6 space-y-3 font-racing text-center">
             <a href="#home" class="block text-cyan-500 py-2 font-bold uppercase text-lg">Home</a>
             <a href="#about" class="block text-slate-700 dark:text-gray-300 py-2 uppercase text-lg">About Us</a>
@@ -221,7 +204,7 @@
                     </p>
 
                     <p class="text-slate-600 dark:text-gray-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
-                        Official platform for <strong class="text-slate-900 dark:text-white font-semibold">Aerial F1</strong>. Combining engineering precision, manufacturing, sponsorship marketing, graphic arts, and project leadership for the F1 in Schools competition.
+                        Official platform for <strong class="text-slate-900 dark:text-white font-semibold">Aerial F1</strong>. Combining engineering precision, manufacturing, sponsorship marketing, graphic arts, and project leadership for the F1 in Schools competition[cite: 7].
                     </p>
 
                     <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-4">
@@ -265,7 +248,7 @@
                     <h2 class="font-racing text-cyan-600 dark:text-cyan-400 font-bold text-lg uppercase tracking-widest">Our Mission</h2>
                     <h3 class="font-racing font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white uppercase">Precision Racing At IHS Oud Metha</h3>
                     <p class="text-slate-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
-                        Aerial F1 is a student STEM racing team representing <strong class="text-slate-900 dark:text-white">The Indian High School, Oud Metha</strong>. Participating in the premier F1 in Schools competition, our team engineers miniature compressed gas-powered cars while running a full corporate structure covering marketing, sponsorship, graphic design, CAD modeling, and manufacturing.
+                        Aerial F1 is a student STEM racing team representing <strong class="text-slate-900 dark:text-white">The Indian High School, Oud Metha</strong>[cite: 7]. Participating in the premier F1 in Schools competition, our team engineers miniature compressed gas-powered cars while running a full corporate structure covering marketing, sponsorship, graphic design, CAD modeling, and manufacturing[cite: 7].
                     </p>
                 </div>
                 <div class="glass-black-card p-6 rounded-xl border border-cyan-500/30 dark:border-cyan-400/30 text-center space-y-3">
@@ -280,22 +263,18 @@
     <!-- TEAM MEMBERS SECTION -->
     <section id="team" class="py-20 relative border-b border-cyan-500/20 dark:border-cyan-400/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
                 <h2 class="font-racing text-cyan-600 dark:text-cyan-400 font-bold text-lg uppercase tracking-widest">Team Roster</h2>
                 <h3 class="font-racing font-bold text-4xl sm:text-5xl text-slate-900 dark:text-white uppercase">Meet Team Aerial F1</h3>
                 <div class="w-24 h-1 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 mx-auto"></div>
-                <p class="text-slate-600 dark:text-gray-300 text-base">Six dedicated students from The Indian High School, Oud Metha driving excellence across engineering and management.</p>
+                <p class="text-slate-600 dark:text-gray-300 text-base">Six dedicated students from The Indian High School, Oud Metha driving excellence across engineering and management[cite: 7].</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Member 1: Team Manager -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
+                <!-- Member 1 -->
+                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-user-tie"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-600 dark:text-cyan-400/80 font-bold uppercase tracking-widest block">Leadership</span>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white">Jefin Mathew Joji</h4>
@@ -307,12 +286,10 @@
                     </div>
                 </div>
 
-                <!-- Member 2: Sponsorship & Marketing Lead -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
+                <!-- Member 2 -->
+                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-bullhorn"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-bullhorn"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-600 dark:text-cyan-400/80 font-bold uppercase tracking-widest block">Commercial Lead</span>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white">Mir Sajjad Mehdi</h4>
@@ -324,12 +301,10 @@
                     </div>
                 </div>
 
-                <!-- Member 3: Manufacturing & 3D Lead -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
+                <!-- Member 3 -->
+                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-gears"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-gears"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-600 dark:text-cyan-400/80 font-bold uppercase tracking-widest block">Production & Engineering</span>
                             <h4 class="font-racing font-bold text-xl text-slate-900 dark:text-white">Navtej Tharayil</h4>
@@ -342,12 +317,10 @@
                     </div>
                 </div>
 
-                <!-- Member 4: Lead Designer, 3D & Web Developer -->
+                <!-- Member 4 -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-500 dark:border-cyan-400 glow-turquoise-sm transition-all duration-300 group">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-cyan-500/20 border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-laptop-code"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-cyan-500/20 border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-laptop-code"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-600 dark:text-cyan-400 font-bold uppercase tracking-widest block">3D Modeling & Digital</span>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white">Krishna Ajayesh</h4>
@@ -363,12 +336,10 @@
                     </div>
                 </div>
 
-                <!-- Member 5: Resource Manager -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
+                <!-- Member 5 -->
+                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-boxes-packing"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-boxes-packing"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-600 dark:text-cyan-400/80 font-bold uppercase tracking-widest block">Operations & Supply</span>
                             <h4 class="font-racing font-bold text-base text-slate-900 dark:text-white">Mohammed Nabeel Raiyan Sirajudin</h4>
@@ -380,12 +351,10 @@
                     </div>
                 </div>
 
-                <!-- Member 6: Graphic Designer -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
+                <!-- Member 6 -->
+                <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/25 dark:border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-palette"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-200 dark:bg-black border-2 border-cyan-500 dark:border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-palette"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-600 dark:text-cyan-400/80 font-bold uppercase tracking-widest block">Visual Branding</span>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white">Mayukh Manoharan</h4>
@@ -396,7 +365,6 @@
                         <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">Designs official team visual assets, brand identity, merchandise, and pit exhibition graphics.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -404,7 +372,6 @@
     <!-- LIVE 3D CAD MODEL VIEWER SECTION -->
     <section id="car" class="py-20 border-b border-cyan-500/20 dark:border-cyan-400/20 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
                 <h2 class="font-racing text-cyan-600 dark:text-cyan-400 font-bold text-lg uppercase tracking-widest">Aerodynamics & CAD</h2>
                 <h3 class="font-racing font-bold text-4xl sm:text-5xl text-slate-900 dark:text-white uppercase">Live 3D Car Model Viewer</h3>
@@ -443,7 +410,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -457,19 +423,14 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- CARD 01 -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-amber-500/50 relative flex flex-col justify-between">
-                    <div class="absolute -top-3 left-6 bg-amber-500 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        CARD 01
-                    </div>
+                    <div class="absolute -top-3 left-6 bg-amber-500 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 01</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-amber-500">
                             <i class="fa-solid fa-wind text-2xl"></i>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white uppercase">Aerodynamics & CFD</h4>
                         </div>
-                        <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">
-                            Optimized low-drag chassis surface design coupled with custom wing profiles mapped to minimize air turbulence and maximize downforce efficiency.
-                        </p>
+                        <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">Optimized low-drag chassis surface design coupled with custom wing profiles mapped to minimize air turbulence and maximize downforce efficiency.</p>
                         <div class="bg-amber-500/10 border border-amber-500/40 p-3 rounded-lg text-amber-600 dark:text-amber-300 font-mono text-xs flex items-center space-x-2">
                             <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
                             <span>Work in Progress CFD V2.4</span>
@@ -477,19 +438,14 @@
                     </div>
                 </div>
 
-                <!-- CARD 03 -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/40 dark:border-cyan-400/40 relative flex flex-col justify-between">
-                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        CARD 03
-                    </div>
+                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 03</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-cyan-600 dark:text-cyan-400">
                             <i class="fa-solid fa-bolt text-2xl"></i>
                             <h4 class="font-racing font-bold text-2xl text-slate-900 dark:text-white uppercase">CO2 Powertrain System</h4>
                         </div>
-                        <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">
-                            Standardized compressed CO2 canister chamber mapped precisely to the rear center of mass for direct thrust vectoring and high-speed momentum.
-                        </p>
+                        <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">Standardized compressed CO2 canister chamber mapped precisely to the rear center of mass for direct thrust vectoring and high-speed momentum.</p>
                         <ul class="text-xs font-mono space-y-1 text-slate-600 dark:text-gray-300 bg-slate-100 dark:bg-neutral-900 p-3 rounded-lg border border-cyan-400/20">
                             <li><span class="text-cyan-600 dark:text-cyan-400">• Pressure Vector:</span> Direct Axis</li>
                             <li><span class="text-cyan-600 dark:text-cyan-400">• Chamber Spec:</span> Standardized F1 Rules</li>
@@ -498,11 +454,8 @@
                     </div>
                 </div>
 
-                <!-- CARD 04 -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-500 dark:border-cyan-400 relative flex flex-col justify-between glow-turquoise-sm">
-                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        CARD 04
-                    </div>
+                    <div class="absolute -top-3 left-6 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 04</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-cyan-600 dark:text-cyan-400">
                             <i class="fa-solid fa-calculator text-2xl"></i>
@@ -531,7 +484,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <!-- Title Partner -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-500 dark:border-cyan-400 relative flex flex-col justify-between glow-turquoise">
                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-cyan-500 dark:bg-cyan-400 text-white dark:text-black font-racing font-extrabold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">Lead Partner</div>
                     <div>
@@ -545,7 +497,6 @@
                     <button onclick="openSponsorModal('Title Partner')" class="w-full bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 text-white dark:text-black font-racing font-extrabold py-2.5 rounded uppercase text-xs border border-cyan-400 hover:scale-105 transition">Enquire Now</button>
                 </div>
 
-                <!-- Gold Tier -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/40 dark:border-cyan-400/40 relative flex flex-col justify-between">
                     <div>
                         <div class="text-amber-500 font-racing font-bold text-xl uppercase tracking-wider mb-1">Gold Partner</div>
@@ -558,7 +509,6 @@
                     <button onclick="openSponsorModal('Gold Tier')" class="w-full bg-slate-200 dark:bg-white/10 hover:bg-amber-400 hover:text-black text-slate-900 dark:text-white font-racing font-bold py-2.5 rounded uppercase text-xs transition">Enquire Now</button>
                 </div>
 
-                <!-- Silver Tier -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/30 dark:border-cyan-400/30 relative flex flex-col justify-between">
                     <div>
                         <div class="text-slate-600 dark:text-gray-300 font-racing font-bold text-xl uppercase tracking-wider mb-1">Silver Partner</div>
@@ -571,7 +521,6 @@
                     <button onclick="openSponsorModal('Silver Tier')" class="w-full bg-slate-200 dark:bg-white/10 hover:bg-gray-300 hover:text-black text-slate-900 dark:text-white font-racing font-bold py-2.5 rounded uppercase text-xs transition">Enquire Now</button>
                 </div>
 
-                <!-- Bronze Tier -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-500/20 dark:border-cyan-400/20 relative flex flex-col justify-between">
                     <div>
                         <div class="text-amber-700 dark:text-amber-600 font-racing font-bold text-xl uppercase tracking-wider mb-1">Bronze Partner</div>
@@ -602,27 +551,41 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Web3Forms Contact Form -->
                 <div class="glass-black-card p-8 rounded-2xl border border-cyan-500/30 dark:border-cyan-400/30">
-                    <form id="contact-form" onsubmit="handleDirectEmailSubmit(event, 'General Inquiry')" class="space-y-4">
+                    <form id="contact-form" onsubmit="submitContactForm(event)" class="space-y-4">
+                        <input type="hidden" name="access_key" value="f332ab16-6b89-4019-a889-745293bf8a68">
+                        <input type="hidden" name="subject" value="New Inquiry from Aerial F1 Website">
+                        
                         <h3 class="font-racing font-bold text-2xl text-slate-900 dark:text-white uppercase mb-4 border-b border-cyan-500/10 pb-2">Send Message</h3>
                         <div>
                             <label class="block text-xs font-racing uppercase mb-1">Your Name</label>
-                            <input type="text" id="contact-name" required placeholder="Full Name" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm focus:border-cyan-400 outline-none">
+                            <input type="text" name="name" id="contact-name" required placeholder="Full Name" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-racing uppercase mb-1">Email Address</label>
-                            <input type="email" id="contact-email" required placeholder="email@example.com" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm focus:border-cyan-400 outline-none">
+                            <input type="email" name="email" id="contact-email" required placeholder="email@example.com" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-racing uppercase mb-1">Message</label>
-                            <textarea id="contact-message" rows="4" required placeholder="Your message..." class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm focus:border-cyan-400 outline-none"></textarea>
+                            <textarea name="message" id="contact-message" rows="4" required placeholder="Your message..." class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm outline-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-white dark:text-black font-racing font-extrabold py-3 rounded uppercase text-sm border border-cyan-400">Send Inquiry</button>
+                        <button type="submit" id="contact-submit-btn" class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-white dark:text-black font-racing font-extrabold py-3 rounded uppercase text-sm border border-cyan-400 transition hover:opacity-90">Send Inquiry</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- SUCCESS TOAST NOTIFICATION -->
+    <div id="success-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-slate-900 border-2 border-cyan-400 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-cyan-400 text-2xl"></i>
+        <div>
+            <h4 class="font-racing font-bold text-lg uppercase text-cyan-400">Message Sent Successfully!</h4>
+            <p class="text-xs text-gray-300">We received your message and will get back to you soon.</p>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="border-t border-cyan-500/30 dark:border-cyan-400/30 py-8 text-center text-xs text-slate-500 dark:text-gray-400 font-mono">
@@ -636,10 +599,16 @@
         <div class="glass-black-card max-w-md w-full p-6 rounded-2xl border-2 border-cyan-400 relative shadow-2xl">
             <button onclick="closeSponsorModal()" class="absolute top-4 right-4 text-slate-500 dark:text-gray-400 hover:text-cyan-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="font-racing font-bold text-2xl text-slate-900 dark:text-white uppercase mb-1">Enquire <span id="modal-tier-name" class="text-cyan-500">Title Partner</span></h3>
-            <form onsubmit="handleModalSubmit(event)" class="space-y-3 mt-4">
-                <input type="text" id="modal-name" required placeholder="Full Name" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none">
-                <input type="email" id="modal-email" required placeholder="Email" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none">
-                <button type="submit" class="w-full bg-cyan-500 text-white dark:text-black font-bold py-2 rounded uppercase text-sm">Submit</button>
+            
+            <form id="modal-form" onsubmit="submitModalForm(event)" class="space-y-3 mt-4">
+                <input type="hidden" name="access_key" value="f332ab16-6b89-4019-a889-745293bf8a68">
+                <input type="hidden" name="subject" id="modal-subject" value="Sponsorship Inquiry">
+                
+                <input type="text" name="name" required placeholder="Full Name" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none">
+                <input type="email" name="email" required placeholder="Email Address" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none">
+                <textarea name="message" rows="3" placeholder="Tell us about your brand goals..." class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none"></textarea>
+                
+                <button type="submit" id="modal-submit-btn" class="w-full bg-cyan-500 text-white dark:text-black font-bold py-2 rounded uppercase text-sm transition hover:opacity-90">Submit Inquiry</button>
             </form>
         </div>
     </div>
@@ -697,26 +666,69 @@
         function openSponsorModal(tier) {
             currentTier = tier;
             document.getElementById('modal-tier-name').innerText = tier;
+            document.getElementById('modal-subject').value = `Sponsorship Inquiry - ${tier}`;
             document.getElementById('sponsor-modal').classList.remove('hidden');
         }
         function closeSponsorModal() {
             document.getElementById('sponsor-modal').classList.add('hidden');
         }
 
-        function handleDirectEmailSubmit(e, type) {
-            e.preventDefault();
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const message = document.getElementById('contact-message').value;
-            window.location.href = `mailto:aerialteam.f1@gmail.com?subject=Inquiry-${type}&body=Name:%20${name}%0AEmail:%20${email}%0AMessage:%20${message}`;
+        function showSuccessToast() {
+            const toast = document.getElementById('success-toast');
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 5000);
         }
 
-        function handleModalSubmit(e) {
+        // --- WEB3FORMS API SUBMISSIONS ---
+        async function submitContactForm(e) {
             e.preventDefault();
-            const name = document.getElementById('modal-name').value;
-            const email = document.getElementById('modal-email').value;
-            window.location.href = `mailto:aerialteam.f1@gmail.com?subject=Sponsorship-${currentTier}&body=Name:%20${name}%0AEmail:%20${email}`;
-            closeSponsorModal();
+            const btn = document.getElementById('contact-submit-btn');
+            btn.innerText = "Sending...";
+            
+            const formData = new FormData(e.target);
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.success) {
+                    e.target.reset();
+                    showSuccessToast();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (err) {
+                alert("Network error. Please try again.");
+            }
+            btn.innerText = "Send Inquiry";
+        }
+
+        async function submitModalForm(e) {
+            e.preventDefault();
+            const btn = document.getElementById('modal-submit-btn');
+            btn.innerText = "Sending...";
+
+            const formData = new FormData(e.target);
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.success) {
+                    e.target.reset();
+                    closeSponsorModal();
+                    showSuccessToast();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (err) {
+                alert("Network error. Please try again.");
+            }
+            btn.innerText = "Submit Inquiry";
         }
 
         // --- THREE.JS 3D STL VIEWER ---
@@ -725,7 +737,6 @@
             if (!container) return;
 
             scene = new THREE.Scene();
-
             camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
 
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
