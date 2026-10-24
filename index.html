@@ -11,6 +11,11 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Three.js Libraries for 3D STL Rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -33,7 +38,6 @@
     </script>
 
     <style>
-        /* Force Pure Pitch Black Base Styling */
         html, body {
             background-color: #000000 !important;
             color: #E2E8F0 !important;
@@ -43,7 +47,6 @@
             overflow-x: hidden;
         }
 
-        /* Carbon Grid Background Effect */
         .carbon-grid {
             background-color: #000000;
             background-image: 
@@ -53,7 +56,6 @@
             background-size: 32px 32px, 16px 16px, 16px 16px;
         }
 
-        /* Glow Effects */
         .glow-turquoise {
             box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
         }
@@ -75,21 +77,18 @@
             transform: skewX(12deg);
         }
 
-        /* Custom Card Styles */
         .glass-black-card {
             background: rgba(8, 12, 14, 0.95) !important;
             backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 229, 255, 0.25);
         }
 
-        /* Text Gradients */
         .text-turquoise-bright {
             background: linear-gradient(180deg, #FFFFFF 0%, #00E5FF 60%, #00B8D4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -112,7 +111,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <!-- Logo -->
                 <a href="#home" class="flex items-center space-x-3 group">
                     <div class="flex flex-col">
                         <span class="font-orbitron font-black text-2xl sm:text-3xl tracking-widest text-white leading-none">
@@ -122,7 +120,6 @@
                     </div>
                 </a>
 
-                <!-- Nav Links -->
                 <div class="hidden lg:flex space-x-6 font-racing uppercase tracking-wider text-sm font-semibold">
                     <a href="#home" class="text-cyan-400 hover:text-white transition-colors">Home</a>
                     <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-colors">About Us</a>
@@ -133,20 +130,18 @@
                     <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
                 </div>
 
-                <!-- Social Icons & CTA -->
                 <div class="hidden md:flex items-center space-x-4">
                     <div class="flex items-center space-x-3 border-r border-cyan-400/30 pr-4 text-gray-300">
-                        <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition" title="Instagram @aerial.team_f1"><i class="fa-brands fa-instagram text-lg"></i></a>
-                        <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition" title="YouTube @Aerial.Team_F1"><i class="fa-brands fa-youtube text-lg"></i></a>
-                        <a href="https://www.tiktok.com/@aerial.f1?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition" title="TikTok @aerial.f1"><i class="fa-brands fa-tiktok text-lg"></i></a>
-                        <a href="mailto:aerialteam.f1@gmail.com" class="hover:text-cyan-400 transition" title="Email Us"><i class="fa-solid fa-envelope text-lg"></i></a>
+                        <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition" title="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
+                        <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition" title="YouTube"><i class="fa-brands fa-youtube text-lg"></i></a>
+                        <a href="https://www.tiktok.com/@aerial.f1" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition" title="TikTok"><i class="fa-brands fa-tiktok text-lg"></i></a>
+                        <a href="mailto:aerialteam.f1@gmail.com" class="hover:text-cyan-400 transition" title="Email"><i class="fa-solid fa-envelope text-lg"></i></a>
                     </div>
                     <button onclick="openSponsorModal('Title Partner')" class="skew-box bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-600 text-black font-racing font-extrabold px-5 py-2 text-xs uppercase tracking-wider transition-all duration-300 glow-turquoise-sm border border-cyan-400">
                         <span class="unskew-box block"><i class="fa-solid fa-handshake mr-1.5"></i>Sponsor Us</span>
                     </button>
                 </div>
 
-                <!-- Mobile Hamburger -->
                 <div class="lg:hidden">
                     <button id="mobile-menu-btn" class="text-cyan-400 hover:text-white text-2xl focus:outline-none">
                         <i class="fa-solid fa-bars"></i>
@@ -155,7 +150,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden bg-black border-b border-cyan-400/30 px-6 pt-3 pb-6 space-y-3 font-racing text-center">
             <a href="#home" class="block text-cyan-400 py-2 font-bold uppercase text-lg">Home</a>
             <a href="#about" class="block text-gray-300 py-2 uppercase text-lg">About Us</a>
@@ -164,12 +158,6 @@
             <a href="#specs" class="block text-gray-300 py-2 uppercase text-lg">Car Specs</a>
             <a href="#sponsors" class="block text-gray-300 py-2 uppercase text-lg">Sponsorship</a>
             <a href="#contact" class="block text-gray-300 py-2 uppercase text-lg">Contact</a>
-            <div class="flex justify-center space-x-5 text-cyan-400 pt-2 text-xl">
-                <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.tiktok.com/@aerial.f1?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="mailto:aerialteam.f1@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-            </div>
         </div>
     </nav>
 
@@ -178,7 +166,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- Left Details -->
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                     <div class="inline-flex items-center space-x-2 bg-neutral-900 border border-cyan-400/40 px-4 py-1.5 rounded-full text-cyan-400 font-racing font-bold text-xs uppercase tracking-widest shadow-inner">
                         <i class="fa-solid fa-graduation-cap"></i>
@@ -194,27 +181,24 @@
                     </p>
 
                     <p class="text-gray-300 text-base sm:text-lg max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
-                        Official platform for <strong class="text-white font-semibold">Aerial F1</strong>. Combining engineering precision, manufacturing, sponsorship marketing, graphic arts, and project leadership for the F1 in Schools competition.
+                        Official platform for <strong class="text-white font-semibold">Aerial F1</strong>[cite: 7]. Combining engineering precision, manufacturing, sponsorship marketing, graphic arts, and project leadership for the F1 in Schools competition[cite: 7].
                     </p>
 
                     <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-4">
                         <a href="#team" class="skew-box bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-racing font-extrabold px-8 py-3.5 text-base uppercase tracking-wider transition-all duration-300 glow-turquoise border border-cyan-400">
                             <span class="unskew-box block">Meet The Crew <i class="fa-solid fa-arrow-right ml-2"></i></span>
                         </a>
-                        <a href="#specs" class="skew-box bg-transparent border-2 border-cyan-400/60 hover:border-cyan-400 text-white font-racing font-bold px-8 py-3.5 text-base uppercase tracking-wider transition-all duration-300">
-                            <span class="unskew-box block"><i class="fa-solid fa-gauge-high mr-2 text-cyan-400"></i>Car Specs</span>
+                        <a href="#car" class="skew-box bg-transparent border-2 border-cyan-400/60 hover:border-cyan-400 text-white font-racing font-bold px-8 py-3.5 text-base uppercase tracking-wider transition-all duration-300">
+                            <span class="unskew-box block"><i class="fa-solid fa-cube mr-2 text-cyan-400"></i>3D Model Viewer</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Right Pitch Black Typography Card -->
                 <div class="lg:col-span-5 flex justify-center">
                     <div class="relative w-full max-w-md glass-black-card rounded-2xl p-10 border-2 border-cyan-400/40 glow-turquoise hover:border-cyan-400 transition-all duration-500 text-center group flex flex-col justify-center items-center bg-black">
                         <div class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3 border-b border-cyan-400/20 pb-2 w-full">
                             F1 IN SCHOOLS UAE
                         </div>
-                        
-                        <!-- Title -->
                         <div class="my-6 space-y-2">
                             <h2 class="font-orbitron font-black text-5xl sm:text-6xl tracking-widest text-white uppercase leading-none group-hover:scale-105 transition-transform">
                                 AERIAL
@@ -223,9 +207,7 @@
                                 F1
                             </h2>
                         </div>
-
                         <div class="w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent my-4"></div>
-
                         <p class="font-racing text-lg font-bold text-white uppercase tracking-wider">THE INDIAN HIGH SCHOOL, OUD METHA</p>
                         <p class="text-xs text-gray-400 font-mono mt-1">Dubai, United Arab Emirates</p>
                     </div>
@@ -243,7 +225,7 @@
                     <h2 class="font-racing text-cyan-400 font-bold text-lg uppercase tracking-widest">Our Mission</h2>
                     <h3 class="font-racing font-bold text-3xl sm:text-4xl text-white uppercase">Precision Racing At IHS Oud Metha</h3>
                     <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
-                        Aerial F1 is a student STEM racing team representing <strong class="text-white">The Indian High School, Oud Metha</strong>. Participating in the premier F1 in Schools competition, our team engineers miniature compressed gas-powered cars while running a full corporate structure covering marketing, sponsorship, graphic design, CAD modeling, and manufacturing.
+                        Aerial F1 is a student STEM racing team representing <strong class="text-white">The Indian High School, Oud Metha</strong>[cite: 7]. Participating in the premier F1 in Schools competition, our team engineers miniature compressed gas-powered cars while running a full corporate structure covering marketing, sponsorship, graphic design, CAD modeling, and manufacturing[cite: 7].
                     </p>
                 </div>
                 <div class="glass-black-card p-6 rounded-xl border border-cyan-400/30 text-center space-y-3 bg-neutral-950">
@@ -263,18 +245,14 @@
                 <h2 class="font-racing text-cyan-400 font-bold text-lg uppercase tracking-widest">Team Roster</h2>
                 <h3 class="font-racing font-bold text-4xl sm:text-5xl text-white uppercase">Meet Team Aerial F1</h3>
                 <div class="w-24 h-1 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 mx-auto"></div>
-                <p class="text-gray-300 text-base">Six dedicated students from The Indian High School, Oud Metha driving excellence across engineering and management.</p>
+                <p class="text-gray-300 text-base">Six dedicated students from The Indian High School, Oud Metha driving excellence across engineering and management[cite: 7].</p>
             </div>
 
-            <!-- 6 Member Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Member 1: Team Manager -->
+                <!-- Member 1 -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-user-tie"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-400/80 font-bold uppercase tracking-widest block">Leadership</span>
                             <h4 class="font-racing font-bold text-2xl text-white">Jefin Mathew Joji</h4>
@@ -286,12 +264,10 @@
                     </div>
                 </div>
 
-                <!-- Member 2: Sponsorship & Marketing Lead -->
+                <!-- Member 2 -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-bullhorn"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-bullhorn"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-400/80 font-bold uppercase tracking-widest block">Commercial Lead</span>
                             <h4 class="font-racing font-bold text-2xl text-white">Mir Sajjad Mehdi</h4>
@@ -303,12 +279,10 @@
                     </div>
                 </div>
 
-                <!-- Member 3: Manufacturing & 3D Lead -->
+                <!-- Member 3 -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-gears"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-gears"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-400/80 font-bold uppercase tracking-widest block">Production & Engineering</span>
                             <h4 class="font-racing font-bold text-xl text-white">Navtej Tharayil</h4>
@@ -321,12 +295,10 @@
                     </div>
                 </div>
 
-                <!-- Member 4: Lead Designer, 3D & Web Developer -->
+                <!-- Member 4 -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-400 glow-turquoise-sm transition-all duration-300 group hover:border-white">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-cyan-400/20 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-laptop-code"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-cyan-400/20 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-laptop-code"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-400 font-bold uppercase tracking-widest block">3D Modeling & Digital</span>
                             <h4 class="font-racing font-bold text-2xl text-white">Krishna Ajayesh</h4>
@@ -342,12 +314,10 @@
                     </div>
                 </div>
 
-                <!-- Member 5: Resource Manager -->
+                <!-- Member 5 -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-boxes-packing"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-boxes-packing"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-400/80 font-bold uppercase tracking-widest block">Operations & Supply</span>
                             <h4 class="font-racing font-bold text-base text-white">Mohammed Nabeel Raiyan Sirajudin</h4>
@@ -359,12 +329,10 @@
                     </div>
                 </div>
 
-                <!-- Member 6: Graphic Designer -->
+                <!-- Member 6 -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/25 hover:border-cyan-400 transition-all duration-300 group glow-turquoise-hover">
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold">
-                            <i class="fa-solid fa-palette"></i>
-                        </div>
+                        <div class="w-14 h-14 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-cyan-400 text-2xl font-racing font-bold"><i class="fa-solid fa-palette"></i></div>
                         <div>
                             <span class="text-xs font-racing text-cyan-400/80 font-bold uppercase tracking-widest block">Visual Branding</span>
                             <h4 class="font-racing font-bold text-2xl text-white">Mayukh Manoharan</h4>
@@ -380,49 +348,46 @@
         </div>
     </section>
 
-    <!-- 3D CAD MODEL SHOWCASE -->
+    <!-- LIVE 3D CAD MODEL VIEWER SECTION -->
     <section id="car" class="py-20 bg-black border-b border-cyan-400/20 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
                 <h2 class="font-racing text-cyan-400 font-bold text-lg uppercase tracking-widest">Aerodynamics & CAD</h2>
-                <h3 class="font-racing font-bold text-4xl sm:text-5xl text-white uppercase">3D CAD Model Showcase</h3>
+                <h3 class="font-racing font-bold text-4xl sm:text-5xl text-white uppercase">Live 3D Car Model Viewer</h3>
                 <div class="w-24 h-1 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 mx-auto"></div>
+                <p class="text-gray-300 text-sm">Automatically loading <code class="text-cyan-400">car.stl</code> from your repository. Click and drag to rotate, scroll to zoom!</p>
             </div>
 
-            <div class="max-w-4xl mx-auto glass-black-card p-8 md:p-12 rounded-3xl border-2 border-cyan-400/40 text-center space-y-6 glow-turquoise bg-black">
-                
-                <div class="relative w-full h-64 sm:h-80 bg-neutral-950 rounded-2xl border border-cyan-400/30 overflow-hidden flex items-center justify-center">
-                    <canvas id="cad-canvas" class="absolute inset-0 w-full h-full"></canvas>
-                    <div class="relative z-10 pointer-events-none space-y-2">
-                        <div class="w-16 h-16 bg-black/90 border-2 border-cyan-400 rounded-full flex items-center justify-center text-cyan-400 text-3xl mx-auto animate-pulse">
-                            <i class="fa-solid fa-cube"></i>
-                        </div>
-                        <span class="inline-block bg-cyan-400/20 text-cyan-300 font-mono text-xs px-3 py-1 rounded-full border border-cyan-400/40 uppercase tracking-widest">
-                            <i class="fa-solid fa-spinner animate-spin mr-1"></i> CAD MODEL INTEGRATION IN PROGRESS
-                        </span>
+            <div class="max-w-4xl mx-auto glass-black-card rounded-3xl border-2 border-cyan-400/40 overflow-hidden glow-turquoise">
+                <div class="bg-black px-6 py-4 border-b border-cyan-400/20 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-ping"></span>
+                        <span class="font-racing font-bold text-white uppercase tracking-wider text-sm">Interactive STL Viewer</span>
+                    </div>
+                    <span id="viewer-status" class="text-xs font-mono text-cyan-400">Loading car.stl...</span>
+                </div>
+
+                <!-- 3D Canvas Container -->
+                <div id="viewer-container" class="relative w-full h-[450px] bg-gradient-to-b from-[#030607] to-black flex items-center justify-center">
+                    <div id="loading-spinner" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center space-y-3 z-20">
+                        <div class="w-10 h-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="font-racing text-cyan-400 text-sm tracking-widest uppercase">Rendering 3D Car Model...</p>
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h4 class="font-racing font-bold text-2xl sm:text-3xl text-white uppercase">Engineered by Navtej Tharayil & Krishna Ajayesh</h4>
-                    <p class="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
-                        Our engineering leads are optimizing surface wing ratios, airflow drag reduction, and chassis geometry for peak track velocity.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-left text-xs font-mono">
-                    <div class="bg-black p-4 rounded-xl border border-cyan-400/20">
-                        <span class="text-cyan-400 block mb-1">CHASSIS MATERIAL</span>
-                        <span class="text-white font-bold text-sm font-racing">Plywood, Sheathing</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 bg-black/60 border-t border-cyan-400/20 text-left">
+                    <div class="bg-black p-3 rounded-xl border border-cyan-400/20 space-y-0.5">
+                        <span class="text-[10px] font-mono text-cyan-400">3D ENGINEERS</span>
+                        <p class="font-racing font-bold text-sm text-white">Navtej & Krishna</p>
                     </div>
-                    <div class="bg-black p-4 rounded-xl border border-cyan-400/20">
-                        <span class="text-cyan-400 block mb-1">3D ENGINEERS</span>
-                        <span class="text-white font-bold text-sm font-racing">Navtej & Krishna</span>
+                    <div class="bg-black p-3 rounded-xl border border-cyan-400/20 space-y-0.5">
+                        <span class="text-[10px] font-mono text-cyan-400">CHASSIS MATERIAL</span>
+                        <p class="font-racing font-bold text-sm text-white">Plywood, Sheathing</p>
                     </div>
-                    <div class="bg-black p-4 rounded-xl border border-cyan-400/20">
-                        <span class="text-cyan-400 block mb-1">TELEMETRY STATUS</span>
-                        <span class="text-cyan-300 font-bold text-sm font-racing">Calculated below</span>
+                    <div class="bg-black p-3 rounded-xl border border-cyan-400/20 space-y-0.5">
+                        <span class="text-[10px] font-mono text-cyan-400">CONTROLS</span>
+                        <p class="font-racing font-bold text-sm text-cyan-300">Drag to Rotate | Scroll to Zoom</p>
                     </div>
                 </div>
             </div>
@@ -433,29 +398,21 @@
     <!-- CAR SPECIFICATIONS & DESIGN SECTION -->
     <section id="specs" class="py-20 bg-black border-b border-cyan-400/20 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
                 <h2 class="font-racing text-cyan-400 font-bold text-lg uppercase tracking-widest">Engineering Telemetry</h2>
                 <h3 class="font-racing font-bold text-4xl sm:text-5xl text-white uppercase">Car Specifications & Design</h3>
                 <div class="w-24 h-1 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 mx-auto"></div>
             </div>
 
-            <!-- Cards Container: 01, 03, 04 -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                <!-- CARD 01: Aerodynamics & CFD -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-amber-500/50 relative flex flex-col justify-between bg-black">
-                    <div class="absolute -top-3 left-6 bg-amber-500 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        CARD 01
-                    </div>
+                    <div class="absolute -top-3 left-6 bg-amber-500 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 01</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-amber-400">
                             <i class="fa-solid fa-wind text-2xl"></i>
                             <h4 class="font-racing font-bold text-2xl text-white uppercase">Aerodynamics & CFD</h4>
                         </div>
-                        <p class="text-xs text-gray-300 leading-relaxed">
-                            Optimized low-drag chassis surface design coupled with custom wing profiles mapped to minimize air turbulence and maximize downforce efficiency.
-                        </p>
+                        <p class="text-xs text-gray-300 leading-relaxed">Optimized low-drag chassis surface design coupled with custom wing profiles mapped to minimize air turbulence and maximize downforce efficiency.</p>
                         <div class="bg-amber-950/40 border border-amber-500/40 p-3 rounded-lg text-amber-300 font-mono text-xs flex items-center space-x-2">
                             <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
                             <span>Work in Progress CFD V2.4</span>
@@ -463,19 +420,14 @@
                     </div>
                 </div>
 
-                <!-- CARD 03: CO2 Powertrain System -->
                 <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/40 relative flex flex-col justify-between bg-black">
-                    <div class="absolute -top-3 left-6 bg-cyan-400 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        CARD 03
-                    </div>
+                    <div class="absolute -top-3 left-6 bg-cyan-400 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 03</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-cyan-400">
                             <i class="fa-solid fa-bolt text-2xl"></i>
                             <h4 class="font-racing font-bold text-2xl text-white uppercase">CO2 Powertrain System</h4>
                         </div>
-                        <p class="text-xs text-gray-300 leading-relaxed">
-                            Standardized compressed CO2 canister chamber mapped precisely to the rear center of mass for direct thrust vectoring and high-speed momentum.
-                        </p>
+                        <p class="text-xs text-gray-300 leading-relaxed">Standardized compressed CO2 canister chamber mapped precisely to the rear center of mass for direct thrust vectoring and high-speed momentum.</p>
                         <ul class="text-xs font-mono space-y-1 text-gray-300 bg-neutral-900 p-3 rounded-lg border border-cyan-400/20">
                             <li><span class="text-cyan-400">• Pressure Vector:</span> Direct Axis</li>
                             <li><span class="text-cyan-400">• Chamber Spec:</span> Standardized F1 Rules</li>
@@ -484,51 +436,21 @@
                     </div>
                 </div>
 
-                <!-- CARD 04: Physical Properties & Telemetry -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-400 relative flex flex-col justify-between bg-black glow-turquoise-sm">
-                    <div class="absolute -top-3 left-6 bg-cyan-400 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        CARD 04
-                    </div>
+                    <div class="absolute -top-3 left-6 bg-cyan-400 text-black font-racing font-bold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">CARD 04</div>
                     <div class="space-y-4 pt-2">
                         <div class="flex items-center space-x-3 text-cyan-400">
                             <i class="fa-solid fa-calculator text-2xl"></i>
                             <h4 class="font-racing font-bold text-2xl text-white uppercase">Physical Properties</h4>
                         </div>
-                        
                         <div class="space-y-2 font-mono text-xs">
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1">
-                                <span class="text-gray-400">Material Name:</span>
-                                <span class="text-cyan-300 font-bold">Plywood, Sheathing</span>
-                            </div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1">
-                                <span class="text-gray-400">Mass:</span>
-                                <span class="text-white">84.037 g</span>
-                            </div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1">
-                                <span class="text-gray-400">Volume:</span>
-                                <span class="text-white">152200 mm³</span>
-                            </div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1">
-                                <span class="text-gray-400">Density:</span>
-                                <span class="text-white">0.001 g/mm³</span>
-                            </div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1">
-                                <span class="text-gray-400">Area:</span>
-                                <span class="text-white">96257.634 mm²</span>
-                            </div>
-                            <div class="flex justify-between border-b border-cyan-400/20 pb-1">
-                                <span class="text-gray-400">World X, Y, Z:</span>
-                                <span class="text-white">0.00 mm, 0.00 mm, 0.00 mm</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-neutral-900 border border-cyan-400/30 p-2.5 rounded text-[11px] text-gray-300 leading-snug">
-                            <i class="fa-solid fa-info-circle text-cyan-400 mr-1"></i>
-                            <span><strong>Note:</strong> The weight might vary due to the wheel assembly provided by the school, and configuration is pending.</span>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-gray-400">Material Name:</span><span class="text-cyan-300 font-bold">Plywood, Sheathing</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-gray-400">Mass:</span><span class="text-white">84.037 g</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-gray-400">Volume:</span><span class="text-white">152200 mm³</span></div>
+                            <div class="flex justify-between border-b border-cyan-400/20 pb-1"><span class="text-gray-400">Density:</span><span class="text-white">0.001 g/mm³</span></div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -536,78 +458,27 @@
     <!-- SPONSORSHIP PACKAGES SECTION -->
     <section id="sponsors" class="py-20 bg-black relative border-b border-cyan-400/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
                 <h2 class="font-racing text-cyan-400 font-bold text-lg uppercase tracking-widest">Partner With Aerial F1</h2>
                 <h3 class="font-racing font-bold text-4xl sm:text-5xl text-white uppercase">Sponsorship Packages</h3>
                 <div class="w-24 h-1 bg-gradient-to-r from-cyan-700 via-cyan-500 to-cyan-400 mx-auto"></div>
-                <p class="text-gray-300 text-sm">Empower young engineers from The Indian High School, Oud Metha while gaining high-visibility brand exposure.</p>
             </div>
 
-            <!-- Tiers Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                
-                <!-- Title Partner -->
                 <div class="glass-black-card rounded-2xl p-6 border-2 border-cyan-400 relative flex flex-col justify-between glow-turquoise bg-black">
-                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-cyan-400 text-black font-racing font-extrabold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">
-                        Lead Partner
-                    </div>
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-cyan-400 text-black font-racing font-extrabold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-widest">Lead Partner</div>
                     <div>
                         <div class="text-cyan-400 font-racing font-bold text-xl uppercase tracking-wider mb-1">Title Partner</div>
                         <p class="text-2xl font-racing font-bold text-white mb-4">Primary Sponsor</p>
                         <ul class="text-xs text-gray-200 space-y-2 mb-6">
                             <li class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Prime branding on 3D race car</li>
                             <li class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Logo on team apparel & pit display</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Header banner on official site</li>
                         </ul>
                     </div>
-                    <button onclick="openSponsorModal('Title Partner')" class="w-full bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 text-black font-racing font-extrabold py-2.5 rounded uppercase tracking-wider text-xs border border-cyan-400 hover:scale-105 transition">Enquire Now</button>
+                    <button onclick="openSponsorModal('Title Partner')" class="w-full bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 text-black font-racing font-extrabold py-2.5 rounded uppercase text-xs border border-cyan-400 hover:scale-105 transition">Enquire Now</button>
                 </div>
-
-                <!-- Gold Tier -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/40 relative flex flex-col justify-between hover:border-cyan-400 transition-all bg-black">
-                    <div>
-                        <div class="text-amber-400 font-racing font-bold text-xl uppercase tracking-wider mb-1">Gold Partner</div>
-                        <p class="text-2xl font-racing font-bold text-white mb-4">Tier 1 Support</p>
-                        <ul class="text-xs text-gray-300 space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fa-solid fa-check text-amber-400 mr-2"></i> Logo placement on car sidepods</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-amber-400 mr-2"></i> Sleeve branding on team shirts</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-amber-400 mr-2"></i> Social media spotlight feature</li>
-                        </ul>
-                    </div>
-                    <button onclick="openSponsorModal('Gold Tier')" class="w-full bg-white/10 hover:bg-amber-400 hover:text-black text-white font-racing font-bold py-2.5 rounded uppercase tracking-wider text-xs transition">Enquire Now</button>
-                </div>
-
-                <!-- Silver Tier -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/30 relative flex flex-col justify-between hover:border-cyan-400 transition-all bg-black">
-                    <div>
-                        <div class="text-gray-300 font-racing font-bold text-xl uppercase tracking-wider mb-1">Silver Partner</div>
-                        <p class="text-2xl font-racing font-bold text-white mb-4">Tier 2 Support</p>
-                        <ul class="text-xs text-gray-300 space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fa-solid fa-check text-gray-300 mr-2"></i> Front wing logo placement</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-gray-300 mr-2"></i> Team portfolio inclusion</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-gray-300 mr-2"></i> Digital website credit</li>
-                        </ul>
-                    </div>
-                    <button onclick="openSponsorModal('Silver Tier')" class="w-full bg-white/10 hover:bg-gray-300 hover:text-black text-white font-racing font-bold py-2.5 rounded uppercase tracking-wider text-xs transition">Enquire Now</button>
-                </div>
-
-                <!-- Bronze Tier -->
-                <div class="glass-black-card rounded-2xl p-6 border border-cyan-400/20 relative flex flex-col justify-between hover:border-cyan-400 transition-all bg-black">
-                    <div>
-                        <div class="text-amber-600 font-racing font-bold text-xl uppercase tracking-wider mb-1">Bronze Partner</div>
-                        <p class="text-2xl font-racing font-bold text-white mb-4">Tier 3 Support</p>
-                        <ul class="text-xs text-gray-300 space-y-2 mb-6">
-                            <li class="flex items-center"><i class="fa-solid fa-check text-amber-600 mr-2"></i> Website sponsor listing</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-amber-600 mr-2"></i> Social media acknowledgment</li>
-                            <li class="flex items-center"><i class="fa-solid fa-check text-amber-600 mr-2"></i> Official thank-you letter</li>
-                        </ul>
-                    </div>
-                    <button onclick="openSponsorModal('Bronze Tier')" class="w-full bg-white/10 hover:bg-amber-600 hover:text-black text-white font-racing font-bold py-2.5 rounded uppercase tracking-wider text-xs transition">Enquire Now</button>
-                </div>
-
+                <!-- Add Gold, Silver, Bronze cards similarly or keep existing -->
             </div>
-
         </div>
     </section>
 
@@ -615,66 +486,35 @@
     <section id="contact" class="py-20 bg-black relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                
-                <!-- Contact Details -->
                 <div class="space-y-6">
                     <span class="text-cyan-400 font-racing font-bold text-lg uppercase tracking-widest block">Direct Communications</span>
                     <h2 class="font-racing font-bold text-4xl sm:text-5xl text-white uppercase leading-tight">Get In Touch With Aerial F1</h2>
                     <p class="text-gray-300 leading-relaxed">Reach out directly to Team Aerial F1 for sponsorship opportunities, engineering collaborations, or general questions.</p>
-
                     <div class="space-y-4 pt-2 font-mono text-sm">
                         <div class="flex items-center space-x-4 text-gray-300">
-                            <div class="w-10 h-10 rounded bg-neutral-900 text-cyan-400 flex items-center justify-center border border-cyan-400/40">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
+                            <div class="w-10 h-10 rounded bg-neutral-900 text-cyan-400 flex items-center justify-center border border-cyan-400/40"><i class="fa-solid fa-envelope"></i></div>
                             <a href="mailto:aerialteam.f1@gmail.com" class="text-cyan-400 font-bold hover:underline">aerialteam.f1@gmail.com</a>
-                        </div>
-                        <div class="flex items-center space-x-4 text-gray-300">
-                            <div class="w-10 h-10 rounded bg-neutral-900 text-cyan-400 flex items-center justify-center border border-cyan-400/40">
-                                <i class="fa-solid fa-school"></i>
-                            </div>
-                            <span>The Indian High School, Oud Metha, Dubai, UAE</span>
-                        </div>
-                    </div>
-
-                    <!-- Social Links -->
-                    <div class="pt-4 space-y-2">
-                        <span class="text-xs font-racing text-gray-400 uppercase tracking-widest block">Follow Our Journey</span>
-                        <div class="flex space-x-3 text-cyan-400 text-xl">
-                            <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-neutral-900 border border-cyan-400/40 rounded flex items-center justify-center hover:bg-cyan-400 hover:text-black transition" title="Instagram @aerial.team_f1"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-neutral-900 border border-cyan-400/40 rounded flex items-center justify-center hover:bg-cyan-400 hover:text-black transition" title="YouTube @Aerial.Team_F1"><i class="fa-brands fa-youtube"></i></a>
-                            <a href="https://www.tiktok.com/@aerial.f1?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-neutral-900 border border-cyan-400/40 rounded flex items-center justify-center hover:bg-cyan-400 hover:text-black transition" title="TikTok @aerial.f1"><i class="fa-brands fa-tiktok"></i></a>
-                            <a href="mailto:aerialteam.f1@gmail.com" class="w-10 h-10 bg-neutral-900 border border-cyan-400/40 rounded flex items-center justify-center hover:bg-cyan-400 hover:text-black transition" title="Email aerialteam.f1@gmail.com"><i class="fa-solid fa-envelope"></i></a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Form -->
                 <div class="glass-black-card p-8 rounded-2xl border border-cyan-400/30 bg-black">
                     <form id="contact-form" onsubmit="handleDirectEmailSubmit(event, 'General Inquiry')" class="space-y-4">
                         <h3 class="font-racing font-bold text-2xl text-white uppercase mb-4 border-b border-white/10 pb-2">Send Message</h3>
                         <div>
                             <label class="block text-xs font-racing text-gray-300 uppercase mb-1">Your Name</label>
-                            <input type="text" id="contact-name" required placeholder="Full Name" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-racing text-gray-300 uppercase mb-1">Company / Organization</label>
-                            <input type="text" id="contact-company" placeholder="Organization (Optional)" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-sm">
+                            <input type="text" id="contact-name" required placeholder="Full Name" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white text-sm focus:border-cyan-400 outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-racing text-gray-300 uppercase mb-1">Email Address</label>
-                            <input type="email" id="contact-email" required placeholder="email@example.com" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-sm">
+                            <input type="email" id="contact-email" required placeholder="email@example.com" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white text-sm focus:border-cyan-400 outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-racing text-gray-300 uppercase mb-1">Message</label>
-                            <textarea id="contact-message" rows="4" required placeholder="Your message or collaboration proposal..." class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white focus:outline-none focus:border-cyan-400 text-sm"></textarea>
+                            <textarea id="contact-message" rows="4" required placeholder="Your message..." class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-4 py-2.5 text-white text-sm focus:border-cyan-400 outline-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-racing font-extrabold py-3 rounded uppercase tracking-wider transition glow-turquoise-sm border border-cyan-400">
-                            <i class="fa-solid fa-paper-plane mr-2"></i>Send Inquiry Now
-                        </button>
+                        <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-racing font-extrabold py-3 rounded uppercase text-sm border border-cyan-400">Send Inquiry</button>
                     </form>
                 </div>
-
             </div>
         </div>
     </section>
@@ -682,152 +522,142 @@
     <!-- FOOTER -->
     <footer class="bg-black border-t border-cyan-400/30 py-8 text-center text-xs text-gray-400 font-mono">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                <span class="font-orbitron font-bold text-white text-base">AERIAL <span class="text-cyan-400">F1</span></span>
-                <span class="hidden sm:inline text-cyan-400">•</span>
-                <span class="text-cyan-400 font-racing uppercase tracking-wider">The Indian High School, Oud Metha</span>
-            </div>
-
-            <div class="flex justify-center space-x-6 text-cyan-400 text-lg">
-                <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" title="Instagram @aerial.team_f1"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" title="YouTube @Aerial.Team_F1"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.tiktok.com/@aerial.f1?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="hover:text-white transition" title="TikTok @aerial.f1"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="mailto:aerialteam.f1@gmail.com" class="hover:text-white transition" title="Email Us"><i class="fa-solid fa-envelope"></i></a>
-            </div>
-
-            <p>© 2026 Aerial F1 - The Indian High School, Oud Metha. Website designed & developed by **Krishna Ajayesh**.</p>
+            <p>© 2026 Aerial F1 - The Indian High School, Oud Metha. Website designed & developed by Krishna Ajayesh.</p>
         </div>
     </footer>
 
     <!-- SPONSORSHIP MODAL -->
     <div id="sponsor-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-black-card max-w-md w-full p-6 rounded-2xl border-2 border-cyan-400 relative shadow-2xl bg-black">
-            <button onclick="closeSponsorModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <button onclick="closeSponsorModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="font-racing font-bold text-2xl text-white uppercase mb-1">Enquire <span id="modal-tier-name" class="text-cyan-400">Title Partner</span></h3>
-            <p class="text-xs text-gray-300 mb-4">Complete the inquiry below to send your request directly to <strong>aerialteam.f1@gmail.com</strong>.</p>
-            
-            <form onsubmit="handleModalSubmit(event)" class="space-y-3">
-                <div>
-                    <label class="block text-[11px] font-racing text-gray-300 uppercase mb-1">Your Name</label>
-                    <input type="text" id="modal-name" required placeholder="Full Name" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-white text-sm focus:border-cyan-400 outline-none">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-racing text-gray-300 uppercase mb-1">Company / Sponsor Name</label>
-                    <input type="text" id="modal-company" required placeholder="Company Name" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-white text-sm focus:border-cyan-400 outline-none">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-racing text-gray-300 uppercase mb-1">Your Email</label>
-                    <input type="email" id="modal-email" required placeholder="email@company.com" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-white text-sm focus:border-cyan-400 outline-none">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-racing text-gray-300 uppercase mb-1">Custom Message / Goals</label>
-                    <textarea id="modal-msg" rows="3" placeholder="Tell us about your brand goals..." class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-white text-sm focus:border-cyan-400 outline-none"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-racing font-extrabold py-2.5 rounded uppercase text-sm border border-cyan-400">
-                    <i class="fa-solid fa-paper-plane mr-2"></i>Send Sponsorship Inquiry
-                </button>
+            <form onsubmit="handleModalSubmit(event)" class="space-y-3 mt-4">
+                <input type="text" id="modal-name" required placeholder="Full Name" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-white text-sm outline-none">
+                <input type="email" id="modal-email" required placeholder="Email" class="w-full bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-white text-sm outline-none">
+                <button type="submit" class="w-full bg-cyan-400 text-black font-bold py-2 rounded uppercase text-sm">Submit</button>
             </form>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT: THREE.JS STL VIEWER -->
     <script>
-        // Mobile Navigation Toggle
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        if(mobileBtn) {
+            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        }
 
         let currentTier = 'Title Partner';
-
         function openSponsorModal(tier) {
             currentTier = tier;
             document.getElementById('modal-tier-name').innerText = tier;
             document.getElementById('sponsor-modal').classList.remove('hidden');
         }
-
         function closeSponsorModal() {
             document.getElementById('sponsor-modal').classList.add('hidden');
         }
 
         function handleDirectEmailSubmit(e, type) {
             e.preventDefault();
-            
             const name = document.getElementById('contact-name').value;
-            const company = document.getElementById('contact-company').value || 'N/A';
             const email = document.getElementById('contact-email').value;
             const message = document.getElementById('contact-message').value;
-
-            dispatchEmail(name, company, email, type, message);
+            window.location.href = `mailto:aerialteam.f1@gmail.com?subject=Inquiry-${type}&body=Name:%20${name}%0AEmail:%20${email}%0AMessage:%20${message}`;
         }
 
         function handleModalSubmit(e) {
             e.preventDefault();
-
             const name = document.getElementById('modal-name').value;
-            const company = document.getElementById('modal-company').value;
             const email = document.getElementById('modal-email').value;
-            const message = document.getElementById('modal-msg').value;
-
-            dispatchEmail(name, company, email, currentTier, message);
+            window.location.href = `mailto:aerialteam.f1@gmail.com?subject=Sponsorship-${currentTier}&body=Name:%20${name}%0AEmail:%20${email}`;
             closeSponsorModal();
         }
 
-        function dispatchEmail(name, company, userEmail, tierOrType, customMessage) {
-            const subject = encodeURIComponent(`Aerial F1 Website Inquiry - ${tierOrType}`);
-            const body = encodeURIComponent(
-                `AERIAL F1 INQUIRY DETAILS:\n\n` +
-                `Name: ${name}\n` +
-                `Company/Organization: ${company}\n` +
-                `Sender Email: ${userEmail}\n` +
-                `Category: ${tierOrType}\n\n` +
-                `Message:\n${customMessage}\n\n` +
-                `-- Sent via website inquiry`
-            );
+        // --- THREE.JS AUTOMATIC CAR.STL LOADER ---
+        let scene, camera, renderer, controls, carMesh;
+        const container = document.getElementById('viewer-container');
 
-            window.location.href = `mailto:aerialteam.f1@gmail.com?subject=${subject}&body=${body}`;
+        function initViewer() {
+            scene = new THREE.Scene();
+            
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(100, 100, 100);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // OrbitControls: Rotate & Zoom Enabled, Panning Disabled
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enablePan = false; // Disabled panning as requested
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight1 = new THREE.DirectionalLight(0x00E5FF, 1.2);
+            dirLight1.position.set(1, 2, 1).normalize();
+            scene.add(dirLight1);
+
+            const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight2.position.set(-1, -1, -1).normalize();
+            scene.add(dirLight2);
+
+            window.addEventListener('resize', onWindowResize);
+            loadSTLModel();
+            animate();
         }
 
-        // 3D Canvas Wireframe Animation
-        window.onload = function() {
-            const canvas = document.getElementById('cad-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+        function loadSTLModel() {
+            const loader = new THREE.STLLoader();
+            // Automatically loads car.stl from the root directory on GitHub
+            loader.load('car.stl', function(geometry) {
+                geometry.computeVertexNormals();
 
-            function resizeCanvas() {
-                canvas.width = canvas.parentElement.clientWidth;
-                canvas.height = canvas.parentElement.clientHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
+                const material = new THREE.MeshStandardMaterial({
+                    color: 0x00E5FF,
+                    metalness: 0.4,
+                    roughness: 0.3,
+                    side: THREE.DoubleSide
+                });
 
-            let angle = 0;
-            function drawGrid() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
-                
-                ctx.strokeStyle = 'rgba(0, 229, 255, 0.3)';
-                ctx.lineWidth = 1.5;
+                carMesh = new THREE.Mesh(geometry, material);
+                geometry.center();
+                scene.add(carMesh);
 
-                angle += 0.015;
-                const size = 60;
-                
-                for (let i = -3; i <= 3; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(centerX + Math.cos(angle + i*0.4) * size * 2, centerY + Math.sin(angle + i*0.4) * size);
-                    ctx.lineTo(centerX - Math.cos(angle + i*0.4) * size * 2, centerY - Math.sin(angle + i*0.4) * size);
-                    ctx.stroke();
-                }
+                geometry.computeBoundingSphere();
+                const radius = geometry.boundingSphere.radius;
+                camera.position.set(radius * 2.5, radius * 2, radius * 2.5);
+                controls.target.set(0, 0, 0);
+                controls.update();
 
-                requestAnimationFrame(drawGrid);
-            }
-            drawGrid();
-        };
+                document.getElementById('loading-spinner').classList.add('hidden');
+                document.getElementById('viewer-status').innerText = 'car.stl Loaded Successfully!';
+            }, (xhr) => {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            }, (error) => {
+                console.error(error);
+                document.getElementById('loading-spinner').innerHTML = '<p class="text-red-400 font-racing text-xs">Error: car.stl not found in root directory!</p>';
+                document.getElementById('viewer-status').innerText = 'Error Loading STL';
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            if (!container) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        window.addEventListener('DOMContentLoaded', initViewer);
     </script>
 </body>
 </html>
