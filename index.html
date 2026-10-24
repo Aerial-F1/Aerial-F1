@@ -47,6 +47,10 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        html {
+            scroll-padding-top: 5rem;
+        }
+
         .dark .carbon-grid {
             background-color: #000000;
             background-image: 
@@ -95,6 +99,29 @@
             color: #0f172a;
         }
 
+        .glass-black-card {
+            transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease, background-color 300ms ease;
+        }
+
+        .glass-black-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 184, 212, 0.14);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .glass-black-card {
+                transition: none;
+            }
+
+            .glass-black-card:hover {
+                transform: none;
+            }
+        }
+
         .text-turquoise-bright {
             background: linear-gradient(180deg, #00838F 0%, #00B8D4 60%, #00E5FF 100%);
             -webkit-background-clip: text;
@@ -122,7 +149,7 @@
 <body class="min-h-screen flex flex-col justify-between carbon-grid bg-slate-50 dark:bg-black text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
     <!-- NAVIGATION BAR -->
-    <nav class="bg-white/90 dark:bg-black/95 border-b border-cyan-500/30 dark:border-cyan-400/30 sticky top-0 z-50 backdrop-blur-md">
+    <nav class="sticky top-0 z-50 border-b border-cyan-500/30 dark:border-cyan-400/30 bg-white/75 dark:bg-black/70 backdrop-blur-xl shadow-md shadow-cyan-900/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
@@ -173,7 +200,7 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-black border-b border-cyan-400/30 px-6 pt-3 pb-6 space-y-3 font-racing text-center">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white/90 dark:bg-black/90 backdrop-blur-xl border-b border-cyan-400/30 px-6 pt-3 pb-6 space-y-3 font-racing text-center">
             <a href="#home" class="block text-cyan-500 py-2 font-bold uppercase text-lg">Home</a>
             <a href="#about" class="block text-slate-700 dark:text-gray-300 py-2 uppercase text-lg">About Us</a>
             <a href="#team" class="block text-slate-700 dark:text-gray-300 py-2 uppercase text-lg">The Team</a>
