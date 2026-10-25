@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aerial F1 - The Indian High School, Oud Metha</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080c0e'/%3E%3Ctext x='7' y='46' font-family='Arial,sans-serif' font-size='32' font-weight='900' font-style='italic' fill='%2300e5ff'%3EF1%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700;800&family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Three.js Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -532,13 +531,13 @@
                         <span class="w-3 h-3 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-ping"></span>
                         <span class="font-racing font-bold text-slate-900 dark:text-white uppercase tracking-wider text-sm">Interactive STL Viewer</span>
                     </div>
-                    <span id="viewer-status" class="text-xs font-mono text-cyan-600 dark:text-cyan-400">Loading car.stl...</span>
+                    <span id="viewer-status" class="text-xs font-mono text-cyan-600 dark:text-cyan-400">3D viewer loads on demand</span>
                 </div>
 
                 <div id="viewer-container" class="relative w-full h-[480px] bg-slate-100 dark:bg-gradient-to-b dark:from-[#030607] dark:to-black flex items-center justify-center transition-colors">
                     <div id="loading-spinner" class="absolute inset-0 bg-slate-100/90 dark:bg-black/80 flex flex-col items-center justify-center space-y-3 z-20">
                         <div class="w-10 h-10 border-4 border-cyan-500 dark:border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-                        <p class="font-racing text-cyan-600 dark:text-cyan-400 text-sm tracking-widest uppercase">Rendering 3D Car Model...</p>
+                        <p class="font-racing text-cyan-600 dark:text-cyan-400 text-sm tracking-widest uppercase">3D Car Model Loads When Needed...</p>
                     </div>
                 </div>
 
@@ -775,32 +774,59 @@
         const html = document.documentElement;
         let scene, camera, renderer, controls, carMesh;
 
-        async function preloadCarGeometry() {
-            let timeoutId = null;
-            let controller = null;
-            try {
-                if (typeof fetch !== 'function' || typeof THREE === 'undefined' || !THREE.STLLoader) return null;
-                if (typeof AbortController !== 'undefined') controller = new AbortController();
-                timeoutId = window.setTimeout(() => {
-                    if (controller) controller.abort();
-                }, 1000);
-                const response = await fetch(
-                    'car.stl',
-                    controller ? { cache: 'force-cache', signal: controller.signal } : { cache: 'force-cache' }
-                );
-                if (!response.ok) return null;
-                const geometry = new THREE.STLLoader().parse(await response.arrayBuffer());
-                geometry.computeVertexNormals();
-                return geometry;
-            } catch (error) {
-                console.info('Optional 3D preload unavailable; the viewer will use its regular loader.', error);
-                return null;
-            } finally {
-                if (timeoutId !== null) window.clearTimeout(timeoutId);
-            }
+        let threeDependenciesPromise = null;
+        let viewerInitializationStarted = false;
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.async = true;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error(`Could not load ${src}`));
+                document.head.appendChild(script);
+            });
         }
 
-        const carGeometryPreloadPromise = preloadCarGeometry();
+        function loadThreeDependencies() {
+            if (window.THREE && window.THREE.STLLoader && window.THREE.OrbitControls) return Promise.resolve();
+            if (!threeDependenciesPromise) {
+                threeDependenciesPromise = (async () => {
+                    try {
+                        if (!window.THREE) {
+                            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
+                        }
+                        if (!window.THREE.STLLoader) {
+                            await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js');
+                        }
+                        if (!window.THREE.OrbitControls) {
+                            await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js');
+                        }
+                    } catch (error) {
+                        threeDependenciesPromise = null;
+                        throw error;
+                    }
+                })();
+            }
+            return threeDependenciesPromise;
+        }
+
+        function initLazy3DViewer() {
+            const section = document.getElementById('car');
+            if (!section) return;
+
+            if (!('IntersectionObserver' in window)) {
+                window.setTimeout(init3DViewer, 1200);
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries, currentObserver) => {
+                if (!entries.some(entry => entry.isIntersecting)) return;
+                currentObserver.disconnect();
+                init3DViewer();
+            }, { rootMargin: '250px 0px' });
+            observer.observe(section);
+        }
 
         function updateThemeUI(isDark) {
             const icon = document.getElementById('theme-toggle-icon');
@@ -877,15 +903,7 @@
             });
 
             initScrollAnimations();
-            try {
-                init3DViewer();
-            } catch (error) {
-                console.info('3D viewer initialization is unavailable on this device.', error);
-                const status = document.getElementById('viewer-status');
-                const spinner = document.getElementById('loading-spinner');
-                if (status) status.innerText = '3D viewer unavailable on this device';
-                if (spinner) spinner.classList.add('hidden');
-            }
+            initLazy3DViewer();
         });
 
         function initScrollAnimations() {
@@ -1163,132 +1181,104 @@
         }
 
         // --- THREE.JS 3D STL VIEWER ---
-        function init3DViewer() {
+        async function init3DViewer() {
+            if (viewerInitializationStarted) return;
+            viewerInitializationStarted = true;
             const container = document.getElementById('viewer-container');
             if (!container) return;
 
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const status = document.getElementById('viewer-status');
+            const spinner = document.getElementById('loading-spinner');
+            if (status) status.innerText = 'Loading 3D viewer...';
 
-            renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'low-power' });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-            container.appendChild(renderer.domElement);
+            try {
+                await loadThreeDependencies();
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
 
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.enablePan = false;
-
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
-
-            const dirLight1 = new THREE.DirectionalLight(0x00E5FF, 1.2);
-            dirLight1.position.set(1, 2, 1).normalize();
-            scene.add(dirLight1);
-
-            const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
-            dirLight2.position.set(-1, -1, -1).normalize();
-            scene.add(dirLight2);
-
-            window.addEventListener('resize', () => {
-                if (!container) return;
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
+                renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'low-power' });
                 renderer.setSize(container.clientWidth, container.clientHeight);
-            });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+                container.appendChild(renderer.domElement);
 
-            const loader = new THREE.STLLoader();
-            let fallbackStarted = false;
-            let modelLoaded = false;
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.enablePan = false;
 
-            function renderCar(geometry) {
-                geometry.computeVertexNormals();
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                scene.add(ambientLight);
 
-                const isDark = html.classList.contains('dark');
-                const material = new THREE.MeshStandardMaterial({
-                    color: isDark ? 0x00E5FF : 0x00838F,
-                    metalness: 0.3,
-                    roughness: 0.3,
-                    side: THREE.DoubleSide
+                const dirLight1 = new THREE.DirectionalLight(0x00E5FF, 1.2);
+                dirLight1.position.set(1, 2, 1).normalize();
+                scene.add(dirLight1);
+
+                const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+                dirLight2.position.set(-1, -1, -1).normalize();
+                scene.add(dirLight2);
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
                 });
 
-                carMesh = new THREE.Mesh(geometry, material);
-                carMesh.rotation.x = -Math.PI / 2;
-
-                const group = new THREE.Group();
-                group.add(carMesh);
-                scene.add(group);
-
-                const bounds = new THREE.Box3().setFromObject(group);
-                const center = bounds.getCenter(new THREE.Vector3());
-                group.position.sub(center);
-
-                const size = new THREE.Vector3();
-                bounds.getSize(size);
-                const maxDim = Math.max(size.x, size.y, size.z);
-                camera.position.set(maxDim * 1.8, maxDim * 1.2, maxDim * 1.8);
-                controls.target.set(0, 0, 0);
-                camera.lookAt(0, 0, 0);
-                controls.update();
-
-                const spinner = document.getElementById('loading-spinner');
-                const status = document.getElementById('viewer-status');
-                if (spinner) spinner.classList.add('hidden');
-                if (status) status.innerText = 'car.stl Loaded!';
-                modelLoaded = true;
-            }
-
-            function showLoadError(error) {
-                console.error(error);
-                const spinner = document.getElementById('loading-spinner');
-                const status = document.getElementById('viewer-status');
-                if (spinner) spinner.classList.add('hidden');
-                if (status) status.innerText = '3D viewer unavailable on this device';
-            }
-
-            function startRegularLoader() {
-                if (fallbackStarted || modelLoaded) return;
-                fallbackStarted = true;
+                const loader = new THREE.STLLoader();
                 loader.load('car.stl', geometry => {
                     try {
-                        renderCar(geometry);
+                        geometry.computeVertexNormals();
+
+                        const isDark = html.classList.contains('dark');
+                        const material = new THREE.MeshStandardMaterial({
+                            color: isDark ? 0x00E5FF : 0x00838F,
+                            metalness: 0.3,
+                            roughness: 0.3,
+                            side: THREE.DoubleSide
+                        });
+
+                        carMesh = new THREE.Mesh(geometry, material);
+                        carMesh.rotation.x = -Math.PI / 2;
+
+                        const group = new THREE.Group();
+                        group.add(carMesh);
+                        scene.add(group);
+
+                        const bounds = new THREE.Box3().setFromObject(group);
+                        const center = bounds.getCenter(new THREE.Vector3());
+                        group.position.sub(center);
+
+                        const size = new THREE.Vector3();
+                        bounds.getSize(size);
+                        const maxDim = Math.max(size.x, size.y, size.z);
+                        camera.position.set(maxDim * 1.8, maxDim * 1.2, maxDim * 1.8);
+                        controls.target.set(0, 0, 0);
+                        camera.lookAt(0, 0, 0);
+                        controls.update();
+
+                        if (spinner) spinner.classList.add('hidden');
+                        if (status) status.innerText = 'car.stl Loaded!';
+
+                        function animate() {
+                            requestAnimationFrame(animate);
+                            controls.update();
+                            renderer.render(scene, camera);
+                        }
+                        animate();
                     } catch (error) {
-                        showLoadError(error);
+                        showViewerUnavailable(error);
                     }
-                }, undefined, showLoadError);
+                }, undefined, showViewerUnavailable);
+            } catch (error) {
+                showViewerUnavailable(error);
             }
+        }
 
-            const preloadFallbackTimer = window.setTimeout(startRegularLoader, 1000);
-            carGeometryPreloadPromise.then(geometry => {
-                if (fallbackStarted) {
-                    if (geometry) geometry.dispose();
-                    return;
-                }
-                window.clearTimeout(preloadFallbackTimer);
-                if (!geometry) {
-                    startRegularLoader();
-                    return;
-                }
-                try {
-                    renderCar(geometry);
-                } catch (error) {
-                    console.info('Preloaded geometry could not be used; switching to the regular loader.', error);
-                    geometry.dispose();
-                    startRegularLoader();
-                }
-            }).catch(error => {
-                console.info('3D preload failed; switching to the regular loader.', error);
-                window.clearTimeout(preloadFallbackTimer);
-                startRegularLoader();
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
-            animate();
+        function showViewerUnavailable(error) {
+            console.info('3D viewer is unavailable; the rest of the page remains usable.', error);
+            const spinner = document.getElementById('loading-spinner');
+            const status = document.getElementById('viewer-status');
+            if (spinner) spinner.classList.add('hidden');
+            if (status) status.innerText = '3D viewer unavailable on this device';
         }
     </script>
 </body>
