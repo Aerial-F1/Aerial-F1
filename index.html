@@ -10,14 +10,14 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.tailwindcss.com" defer onload="window.tailwind.config = window.AERIAL_TAILWIND_CONFIG"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700;800&family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
-        tailwind.config = {
+        window.AERIAL_TAILWIND_CONFIG = {
             darkMode: 'class',
             theme: {
                 extend: {
@@ -824,7 +824,7 @@
                 if (!entries.some(entry => entry.isIntersecting)) return;
                 currentObserver.disconnect();
                 init3DViewer();
-            }, { rootMargin: '250px 0px' });
+            }, { rootMargin: '900px 0px' });
             observer.observe(section);
         }
 
@@ -1181,6 +1181,24 @@
         }
 
         // --- THREE.JS 3D STL VIEWER ---
+        async function loadCarGeometry() {
+            if (typeof DecompressionStream === 'function') {
+                try {
+                    const response = await fetch('car.stl.gz');
+                    if (!response.ok) throw new Error(`Could not load compressed model (${response.status})`);
+                    const compressed = await response.arrayBuffer();
+                    const decompressed = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
+                    return new THREE.STLLoader().parse(await new Response(decompressed).arrayBuffer());
+                } catch (error) {
+                    console.info('Compressed car model unavailable; loading the standard STL.', error);
+                }
+            }
+
+            return new Promise((resolve, reject) => {
+                new THREE.STLLoader().load('car.stl', resolve, undefined, reject);
+            });
+        }
+
         async function init3DViewer() {
             if (viewerInitializationStarted) return;
             viewerInitializationStarted = true;
@@ -1223,51 +1241,45 @@
                     renderer.setSize(container.clientWidth, container.clientHeight);
                 });
 
-                const loader = new THREE.STLLoader();
-                loader.load('car.stl', geometry => {
-                    try {
-                        geometry.computeVertexNormals();
+                const geometry = await loadCarGeometry();
+                geometry.computeVertexNormals();
 
-                        const isDark = html.classList.contains('dark');
-                        const material = new THREE.MeshStandardMaterial({
-                            color: isDark ? 0x00E5FF : 0x00838F,
-                            metalness: 0.3,
-                            roughness: 0.3,
-                            side: THREE.DoubleSide
-                        });
+                const isDark = html.classList.contains('dark');
+                const material = new THREE.MeshStandardMaterial({
+                    color: isDark ? 0x00E5FF : 0x00838F,
+                    metalness: 0.3,
+                    roughness: 0.3,
+                    side: THREE.DoubleSide
+                });
 
-                        carMesh = new THREE.Mesh(geometry, material);
-                        carMesh.rotation.x = -Math.PI / 2;
+                carMesh = new THREE.Mesh(geometry, material);
+                carMesh.rotation.x = -Math.PI / 2;
 
-                        const group = new THREE.Group();
-                        group.add(carMesh);
-                        scene.add(group);
+                const group = new THREE.Group();
+                group.add(carMesh);
+                scene.add(group);
 
-                        const bounds = new THREE.Box3().setFromObject(group);
-                        const center = bounds.getCenter(new THREE.Vector3());
-                        group.position.sub(center);
+                const bounds = new THREE.Box3().setFromObject(group);
+                const center = bounds.getCenter(new THREE.Vector3());
+                group.position.sub(center);
 
-                        const size = new THREE.Vector3();
-                        bounds.getSize(size);
-                        const maxDim = Math.max(size.x, size.y, size.z);
-                        camera.position.set(maxDim * 1.8, maxDim * 1.2, maxDim * 1.8);
-                        controls.target.set(0, 0, 0);
-                        camera.lookAt(0, 0, 0);
-                        controls.update();
+                const size = new THREE.Vector3();
+                bounds.getSize(size);
+                const maxDim = Math.max(size.x, size.y, size.z);
+                camera.position.set(maxDim * 1.8, maxDim * 1.2, maxDim * 1.8);
+                controls.target.set(0, 0, 0);
+                camera.lookAt(0, 0, 0);
+                controls.update();
 
-                        if (spinner) spinner.classList.add('hidden');
-                        if (status) status.innerText = 'car.stl Loaded!';
+                if (spinner) spinner.classList.add('hidden');
+                if (status) status.innerText = 'Car model loaded';
 
-                        function animate() {
-                            requestAnimationFrame(animate);
-                            controls.update();
-                            renderer.render(scene, camera);
-                        }
-                        animate();
-                    } catch (error) {
-                        showViewerUnavailable(error);
-                    }
-                }, undefined, showViewerUnavailable);
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
             } catch (error) {
                 showViewerUnavailable(error);
             }
