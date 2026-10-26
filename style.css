@@ -30,6 +30,30 @@
             padding: 0.25rem 0.65rem;
         }
 
+        .user-greeting:not(:empty) {
+            align-items: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 9999px;
+            background: #f1f5f9;
+            color: #1e293b;
+            display: inline-flex;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.25rem;
+            max-width: 11rem;
+            overflow: hidden;
+            padding: 0.3rem 0.75rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        html.dark .user-greeting:not(:empty) {
+            background: #1e293b;
+            border-color: #475569;
+            color: #f1f5f9;
+        }
+
         html.dark .welcome-user-badge {
             border-color: rgba(0, 229, 255, 0.3);
             background: rgba(8, 12, 14, 0.82);
