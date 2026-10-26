@@ -12,6 +12,13 @@ function readStoredUserName() {
     }
 }
 
+function updateHeaderGreeting() {
+    const greetingEl = document.getElementById('user-greeting');
+    if (!greetingEl) return;
+    const savedName = readStoredUserName();
+    greetingEl.textContent = savedName ? `Welcome, ${savedName}` : '';
+}
+
 window.AerialUserSession = {
     getName: readStoredUserName,
     saveName(name) {
@@ -66,12 +73,12 @@ window.AerialUserSession = {
         }
     },
     updateGreeting(name = readStoredUserName()) {
-        ['user-greeting', 'welcome-user-badge-mobile'].forEach(id => {
-            const badge = document.getElementById(id);
-            if (!badge) return;
-            badge.textContent = name ? `Welcome, ${name}` : '';
-            badge.classList.toggle('hidden', !name);
-        });
+        updateHeaderGreeting();
+        const mobileGreeting = document.getElementById('welcome-user-badge-mobile');
+        if (mobileGreeting) {
+            mobileGreeting.textContent = name ? `Welcome, ${name}` : '';
+            mobileGreeting.classList.toggle('hidden', !name);
+        }
     },
     fillNameFields() {
         const name = readStoredUserName();
@@ -194,6 +201,7 @@ window.AerialUserSession = {
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            updateHeaderGreeting();
             window.AerialUserSession.updateGreeting();
             const themeBtn = document.getElementById('theme-toggle');
             const themeBtnMobile = document.getElementById('theme-toggle-mobile');
@@ -654,7 +662,11 @@ window.AerialUserSession = {
                     termsVersion: '2026-10-26'
                 });
                 localStorage.setItem(key, JSON.stringify(logs));
+                const nameInput = document.getElementById('terms-full-name');
+                const userName = nameInput.value.trim();
+                if (userName) localStorage.setItem('aerial_user_name', userName);
                 window.AerialUserSession.markTermsAccepted(fullName);
+                updateHeaderGreeting();
             } catch (error) {
                 console.warn('Terms consent could not be recorded in this browser.', error);
                 status.textContent = 'Consent could not be recorded on this device. Enable local storage and try again.';
