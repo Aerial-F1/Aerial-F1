@@ -283,6 +283,46 @@
             transform: translateZ(0) scale(0.96);
         }
 
+        #terms-flow {
+            background: rgba(248, 250, 252, 0.76);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            backdrop-filter: blur(25px) saturate(180%);
+        }
+
+        .dark #terms-flow {
+            background: rgba(2, 6, 23, 0.76);
+        }
+
+        .terms-stage {
+            max-height: calc(100vh - 2rem);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            transition: opacity 220ms ease, transform 220ms ease;
+        }
+
+        .terms-stage.glass-black-card:hover {
+            transform: translateZ(0);
+        }
+
+        @supports (height: 100dvh) {
+            .terms-stage {
+                max-height: calc(100dvh - 2rem);
+            }
+        }
+
+        .terms-stage.is-leaving {
+            opacity: 0;
+            transform: translateY(8px) scale(0.98);
+        }
+
+        .terms-content {
+            max-height: min(32vh, 260px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -303,7 +343,8 @@
             }
 
             .modal-backdrop,
-            .modal-panel {
+            .modal-panel,
+            .terms-stage {
                 transition: none;
             }
 
@@ -791,6 +832,10 @@
                             <label for="contact-message" class="block text-xs font-racing uppercase mb-1">Message</label>
                             <textarea name="message" id="contact-message" rows="4" required placeholder="Your message..." class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-500/30 dark:border-cyan-400/30 rounded px-4 py-2.5 text-slate-900 dark:text-white text-sm outline-none"></textarea>
                         </div>
+                        <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                            By submitting, you agree to our
+                            <a href="#terms-flow" onclick="startTermsFlow('contact-form'); return false;" class="font-semibold text-cyan-700 underline underline-offset-2 dark:text-cyan-300">Terms &amp; Conditions &amp; Site Security</a>.
+                        </p>
                         <button type="submit" id="contact-submit-btn" class="w-full bg-gradient-to-r from-cyan-500 to-cyan-400 text-white dark:text-black font-racing font-extrabold py-3 rounded uppercase text-sm border border-cyan-400 transition hover:opacity-90">Send Inquiry</button>
                     </form>
                 </div>
@@ -833,7 +878,10 @@
                 <label for="sponsor-phone" class="sr-only">Phone Number (Optional)</label>
                 <input type="tel" id="sponsor-phone" name="phone" placeholder="Phone Number (Optional)" autocomplete="tel" class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none">
                 <textarea name="message" rows="3" placeholder="Tell us about your brand goals..." class="w-full bg-slate-100 dark:bg-neutral-900 border border-cyan-400/30 rounded px-3 py-2 text-slate-900 dark:text-white text-sm outline-none"></textarea>
-                
+                <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                    By submitting, you agree to our
+                    <a href="#terms-flow" onclick="startTermsFlow('modal-form'); return false;" class="font-semibold text-cyan-700 underline underline-offset-2 dark:text-cyan-300">Terms &amp; Conditions &amp; Site Security</a>.
+                </p>
                 <button type="submit" id="modal-submit-btn" class="w-full bg-cyan-500 text-white dark:text-black font-bold py-2 rounded uppercase text-sm transition hover:opacity-90">Submit Inquiry</button>
             </form>
         </div>
@@ -901,6 +949,70 @@
         </div>
     </div>
 
+    <!-- AERIAL F1 TERMS AND ACCESS FLOW -->
+    <div id="terms-flow" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4" aria-live="polite">
+        <section id="terms-verification-stage" class="terms-stage glass-black-card w-full max-w-md rounded-3xl p-7 text-center shadow-2xl" role="status" aria-labelledby="terms-verification-title" tabindex="-1">
+            <div class="relative mx-auto mb-5 flex h-20 w-20 items-center justify-center">
+                <span class="absolute inset-0 animate-spin rounded-full border-2 border-cyan-500/20 border-t-cyan-500"></span>
+                <i class="fa-solid fa-shield-halved text-3xl text-emerald-600 dark:text-emerald-400" aria-hidden="true"></i>
+            </div>
+            <p class="font-racing text-xs font-bold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">Aerial F1 Site Access</p>
+            <h2 id="terms-verification-title" class="mt-2 font-racing text-2xl font-bold text-slate-900 dark:text-white">Verifying session &amp; loading Aerial F1 terms...</h2>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">This is a brief loading transition only; no security challenge or identity verification is performed.</p>
+            <ul class="mt-6 space-y-2 text-left text-sm text-slate-700 dark:text-slate-200">
+                <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400" aria-hidden="true"></i><span>Terms loaded</span></li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-circle-info text-cyan-700 dark:text-cyan-300" aria-hidden="true"></i><span>Data use explained before consent</span></li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-lock text-slate-500 dark:text-slate-400" aria-hidden="true"></i><span>No browser challenge is performed</span></li>
+            </ul>
+        </section>
+
+        <section id="terms-consent-stage" class="terms-stage glass-black-card hidden w-full max-w-2xl rounded-3xl p-5 shadow-2xl sm:p-8" role="dialog" aria-modal="true" aria-labelledby="terms-title" aria-describedby="terms-intro">
+            <div class="mb-5 flex items-start justify-between gap-4">
+                <div>
+                    <p class="font-racing text-xs font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">Aerial F1 • Site terms</p>
+                    <h2 id="terms-title" class="mt-1 font-racing text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">Terms of Service &amp; User Access Authorization</h2>
+                    <p id="terms-intro" class="mt-2 text-sm text-slate-600 dark:text-slate-300">Review the current data practices and enter your name to record your consent on this device.</p>
+                </div>
+                <button type="button" onclick="closeTermsFlow()" class="shrink-0 rounded-full p-2 text-slate-500 hover:text-cyan-600 dark:text-slate-300" aria-label="Cancel terms and exit"><i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="terms-content space-y-4 rounded-2xl border border-white/50 bg-white/60 p-4 text-sm leading-relaxed text-slate-700 shadow-inner dark:border-white/10 dark:bg-black/20 dark:text-slate-200 sm:p-5">
+                <section>
+                    <h3 class="font-racing font-bold uppercase text-slate-900 dark:text-white">Security &amp; telemetry</h3>
+                    <p>This page does not run a Cloudflare challenge or scan browser activity for bots or DDoS attacks. The site host may process connection metadata such as IP address and device user-agent under its own service policies. When company intake is submitted, the site looks up the IP address through ipify and sends the intake fields to SheetDB. Contact and sponsorship inquiries are sent to Web3Forms.</p>
+                </section>
+                <section>
+                    <h3 class="font-racing font-bold uppercase text-slate-900 dark:text-white">Personal data and service providers</h3>
+                    <p>Aerial F1 does not sell, rent, or monetize personal details through this website. Information is shared with the named service providers only to operate the corresponding feature; those providers process data under their own terms and privacy policies. The consent name and timestamp are stored in this browser only.</p>
+                </section>
+                <section>
+                    <h3 class="font-racing font-bold uppercase text-slate-900 dark:text-white">Purpose of collection</h3>
+                    <p>Contact details and messages are used for team communications and follow-up. Company intake details support the team's visitor records. The consent record documents acceptance of these terms on this device.</p>
+                </section>
+                <section>
+                    <h3 class="font-racing font-bold uppercase text-slate-900 dark:text-white">Aggregated metrics</h3>
+                    <p>This website does not currently collect or share interaction analytics with judges or sponsors. If anonymized aggregate metrics are shared in the future, they will not identify individual visitors.</p>
+                </section>
+            </div>
+
+            <form id="terms-consent-form" class="mt-5 space-y-4" onsubmit="acceptTermsConsent(event)">
+                <div>
+                    <label for="terms-full-name" class="mb-1 block font-racing text-xs font-bold uppercase text-slate-800 dark:text-slate-100">Full Name</label>
+                    <input id="terms-full-name" name="full_name" type="text" autocomplete="name" required maxlength="120" class="w-full rounded-xl border border-cyan-500/30 bg-white/80 px-4 py-3 text-slate-900 outline-none focus:border-cyan-600 dark:bg-neutral-900 dark:text-white" placeholder="Enter your full name">
+                </div>
+                <label class="flex items-start gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                    <input id="terms-accept-checkbox" type="checkbox" required class="mt-1 h-4 w-4 accent-cyan-600">
+                    <span>I have read and agree to these terms and data disclosures.</span>
+                </label>
+                <p id="terms-consent-status" class="min-h-5 text-sm text-rose-700 dark:text-rose-300" role="status" aria-live="polite"></p>
+                <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                    <button type="button" onclick="closeTermsFlow()" class="border border-slate-400/50 bg-white/60 px-5 py-3 font-racing font-bold uppercase text-slate-700 hover:bg-slate-100 dark:border-white/20 dark:bg-white/5 dark:text-slate-200 dark:hover:bg-white/10">Cancel / Exit</button>
+                    <button id="terms-accept-button" type="submit" disabled class="bg-gradient-to-r from-cyan-600 to-cyan-400 px-5 py-3 font-racing font-extrabold uppercase text-slate-950 transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50">Accept &amp; Continue</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
         const html = document.documentElement;
@@ -909,6 +1021,9 @@
         let threeDependenciesPromise = null;
         let viewerInitializationStarted = false;
         let visitorAccessLocked = true;
+        let termsTransitionTimeout = null;
+        let activeTermsFormId = null;
+        let termsTriggerElement = null;
 
         function loadScript(src) {
             return new Promise((resolve, reject) => {
@@ -1028,6 +1143,17 @@
             }
 
             setVisitorAccessLocked(true);
+            const termsNameInput = document.getElementById('terms-full-name');
+            const termsCheckbox = document.getElementById('terms-accept-checkbox');
+            const updateTermsAcceptButton = () => {
+                const button = document.getElementById('terms-accept-button');
+                button.disabled = !termsNameInput.value.trim() || !termsCheckbox.checked;
+            };
+            termsNameInput.addEventListener('input', updateTermsAcceptButton);
+            termsCheckbox.addEventListener('change', updateTermsAcceptButton);
+            document.getElementById('terms-flow').addEventListener('click', event => {
+                if (event.target === event.currentTarget) closeTermsFlow();
+            });
             document.addEventListener('touchmove', event => {
                 if (visitorAccessLocked
                     && (!(event.target instanceof Element) || !event.target.closest('#visitor-modal .modal-panel'))) {
@@ -1043,6 +1169,28 @@
                     }
                     if (event.key === 'Tab') {
                         const focusable = Array.from(document.getElementById('visitor-modal').querySelectorAll(
+                            'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                        ));
+                        const first = focusable[0];
+                        const last = focusable[focusable.length - 1];
+                        if (event.shiftKey && document.activeElement === first) {
+                            event.preventDefault();
+                            last.focus();
+                        } else if (!event.shiftKey && document.activeElement === last) {
+                            event.preventDefault();
+                            first.focus();
+                        }
+                    }
+                    return;
+                }
+                if (!document.getElementById('terms-flow').classList.contains('hidden')) {
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        closeTermsFlow();
+                        return;
+                    }
+                    if (event.key === 'Tab') {
+                        const focusable = Array.from(document.getElementById('terms-consent-stage').querySelectorAll(
                             'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
                         ));
                         const first = focusable[0];
@@ -1080,7 +1228,7 @@
         }
 
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('section, .glass-black-card');
+            const elements = document.querySelectorAll('section:not(.terms-stage), .glass-black-card:not(.terms-stage)');
             const reducedMotion = typeof window.matchMedia === 'function'
                 && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1350,8 +1498,94 @@
             }, 5000);
         }
 
+        function startTermsFlow(formId) {
+            const form = document.getElementById(formId);
+            const flow = document.getElementById('terms-flow');
+            if (!form || !flow) return;
+            if (termsTransitionTimeout !== null) window.clearTimeout(termsTransitionTimeout);
+
+            activeTermsFormId = formId;
+            termsTriggerElement = document.activeElement;
+            document.getElementById('terms-consent-form').reset();
+            document.getElementById('terms-accept-button').disabled = true;
+            document.getElementById('terms-consent-status').textContent = '';
+            document.body.classList.add('modal-open');
+            Array.from(document.body.children).forEach(element => {
+                element.inert = element !== flow;
+            });
+            flow.classList.remove('hidden');
+            document.getElementById('terms-verification-stage').classList.remove('hidden', 'is-leaving');
+            document.getElementById('terms-consent-stage').classList.add('hidden');
+            document.getElementById('terms-verification-stage').focus({ preventScroll: true });
+            termsTransitionTimeout = window.setTimeout(() => {
+                const verification = document.getElementById('terms-verification-stage');
+                verification.classList.add('is-leaving');
+                termsTransitionTimeout = window.setTimeout(() => {
+                    verification.classList.add('hidden');
+                    verification.classList.remove('is-leaving');
+                    document.getElementById('terms-consent-stage').classList.remove('hidden');
+                    document.getElementById('terms-full-name').focus({ preventScroll: true });
+                    termsTransitionTimeout = null;
+                }, 220);
+            }, 2000);
+        }
+
+        function closeTermsFlow() {
+            if (termsTransitionTimeout !== null) {
+                window.clearTimeout(termsTransitionTimeout);
+                termsTransitionTimeout = null;
+            }
+            document.getElementById('terms-flow').classList.add('hidden');
+            document.getElementById('terms-verification-stage').classList.remove('is-leaving');
+            document.getElementById('terms-consent-stage').classList.add('hidden');
+            document.body.classList.remove('modal-open');
+            Array.from(document.body.children).forEach(element => {
+                element.inert = false;
+            });
+            if (visitorAccessLocked) setVisitorAccessLocked(true);
+            else if (termsTriggerElement instanceof HTMLElement) termsTriggerElement.focus({ preventScroll: true });
+            termsTriggerElement = null;
+            activeTermsFormId = null;
+        }
+
+        function acceptTermsConsent(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('terms-full-name').value.trim();
+            const accepted = document.getElementById('terms-accept-checkbox').checked;
+            const status = document.getElementById('terms-consent-status');
+            if (!fullName || !accepted || !activeTermsFormId) return;
+
+            try {
+                const key = 'aerial_terms_consent_logs';
+                const logs = JSON.parse(localStorage.getItem(key) || '[]');
+                if (!Array.isArray(logs)) throw new Error('The local consent log has an invalid format.');
+                logs.push({
+                    fullName,
+                    form: activeTermsFormId,
+                    acceptedAt: new Date().toISOString(),
+                    termsVersion: '2026-10-26'
+                });
+                localStorage.setItem(key, JSON.stringify(logs));
+            } catch (error) {
+                console.warn('Terms consent could not be recorded in this browser.', error);
+                status.textContent = 'Consent could not be recorded on this device. Enable local storage and try again.';
+                return;
+            }
+
+            const form = document.getElementById(activeTermsFormId);
+            if (form) form.dataset.termsAccepted = 'true';
+            status.textContent = '';
+            closeTermsFlow();
+            const submitButton = form && form.querySelector('button[type="submit"]');
+            if (submitButton) submitButton.focus({ preventScroll: true });
+        }
+
         async function submitContactForm(e) {
             e.preventDefault();
+            if (e.currentTarget.dataset.termsAccepted !== 'true') {
+                startTermsFlow(e.currentTarget.id);
+                return;
+            }
             const btn = document.getElementById('contact-submit-btn');
             btn.innerText = 'Sending...';
             btn.disabled = true;
@@ -1377,6 +1611,10 @@
 
         async function submitModalForm(e) {
             e.preventDefault();
+            if (e.currentTarget.dataset.termsAccepted !== 'true') {
+                startTermsFlow(e.currentTarget.id);
+                return;
+            }
             const btn = document.getElementById('modal-submit-btn');
             btn.innerText = 'Sending...';
             btn.disabled = true;
