@@ -30,25 +30,25 @@
             padding: 0.25rem 0.65rem;
         }
 
-        .user-greeting:not(:empty) {
+        .user-greeting-badge:not(:empty) {
             align-items: center;
             border: 1px solid #cbd5e1;
-            border-radius: 9999px;
-            background: #f1f5f9;
-            color: #1e293b;
+            border-radius: 20px;
+            background: #e2e8f0;
+            color: #0f172a;
             display: inline-flex;
             font-family: 'Titillium Web', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             line-height: 1.25rem;
             max-width: 11rem;
             overflow: hidden;
-            padding: 0.3rem 0.75rem;
+            padding: 4px 10px;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        html.dark .user-greeting:not(:empty) {
+        html.dark .user-greeting-badge:not(:empty) {
             background: #1e293b;
             border-color: #475569;
             color: #f1f5f9;
