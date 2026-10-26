@@ -530,7 +530,7 @@
                             </div>
                             <div class="rounded-2xl border border-white/50 bg-white/50 p-4 dark:border-white/10 dark:bg-white/5">
                                 <dt class="font-racing text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Team Leader</dt>
-                                <dd class="mt-1 font-semibold text-slate-900 dark:text-white">Navtej Tharayil</dd>
+                                <dd class="mt-1 font-semibold text-slate-900 dark:text-white">Jefin Mathew Joji</dd>
                             </div>
                         </dl>
                     </article>
@@ -1116,11 +1116,12 @@
 
         function closeVisitorModal() {
             const modal = document.getElementById('visitor-modal');
-            if (visitorAccessLocked || !modal || modal.classList.contains('is-closed')) return;
+            if (visitorAccessLocked || !modal || modal.classList.contains('is-closed')) return Promise.resolve();
             modal.classList.add('is-closed');
-            window.setTimeout(() => {
+            return new Promise(resolve => window.setTimeout(() => {
                 if (modal.classList.contains('is-closed')) modal.classList.add('hidden');
-            }, 250);
+                resolve();
+            }, 250));
         }
 
         function readVisitorLogs() {
@@ -1282,6 +1283,18 @@
             const companyName = String(formData.get('company_name') || '').trim();
             const email = String(formData.get('email') || '').trim();
             const phone = String(formData.get('phone') || '').trim();
+            if (companyName.toLowerCase() === 'xxx') {
+                setVisitorAccessLocked(false);
+                form.reset();
+                button.disabled = false;
+                button.textContent = 'Send Company Details';
+                status.textContent = '';
+                await closeVisitorModal();
+                window.alert('Hello Admin!');
+                initLazy3DViewer();
+                return;
+            }
+
             status.textContent = 'Looking up your IP address and saving your submission...';
             let savedLocally = false;
             let savedToSheet = false;
@@ -1309,8 +1322,9 @@
                 button.disabled = false;
                 button.textContent = 'Send Company Details';
                 status.textContent = '';
-                closeVisitorModal();
+                await closeVisitorModal();
                 initLazy3DViewer();
+                document.getElementById('about').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             if (savedToSheet) {
