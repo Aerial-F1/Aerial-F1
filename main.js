@@ -66,7 +66,7 @@ window.AerialUserSession = {
         }
     },
     updateGreeting(name = readStoredUserName()) {
-        ['welcome-user-badge', 'welcome-user-badge-mobile'].forEach(id => {
+        ['user-greeting', 'welcome-user-badge-mobile'].forEach(id => {
             const badge = document.getElementById(id);
             if (!badge) return;
             badge.textContent = name ? `Welcome, ${name}` : '';
@@ -194,6 +194,7 @@ window.AerialUserSession = {
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            window.AerialUserSession.updateGreeting();
             const themeBtn = document.getElementById('theme-toggle');
             const themeBtnMobile = document.getElementById('theme-toggle-mobile');
             if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
