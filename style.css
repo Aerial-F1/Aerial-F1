@@ -17,19 +17,6 @@
             scroll-behavior: auto !important;
         }
 
-        .welcome-user-badge {
-            align-items: center;
-            border: 1px solid rgba(0, 184, 212, 0.35);
-            border-radius: 9999px;
-            background: rgba(240, 253, 255, 0.92);
-            color: #155e75;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            line-height: 1.25rem;
-            padding: 0.25rem 0.65rem;
-        }
-
         .user-greeting-badge:not(:empty) {
             align-items: center;
             border: 1px solid #cbd5e1;
@@ -48,16 +35,52 @@
             white-space: nowrap;
         }
 
+        .nav-actions {
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 420px) {
+            .user-greeting-badge:not(:empty) {
+                max-width: 5.5rem;
+                font-size: 0.7rem;
+                padding: 3px 7px;
+            }
+        }
+
+        .footer-social-links {
+            align-items: center;
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            padding: 0.25rem 0 0.5rem;
+        }
+
+        .footer-social-links a {
+            color: #475569;
+            font-size: 1.125rem;
+            line-height: 1;
+            transition: color 180ms ease, transform 180ms ease;
+        }
+
+        .footer-social-links a:hover,
+        .footer-social-links a:focus-visible {
+            color: #0891b2;
+            transform: translateY(-2px);
+        }
+
+        html.dark .footer-social-links a {
+            color: #cbd5e1;
+        }
+
+        html.dark .footer-social-links a:hover,
+        html.dark .footer-social-links a:focus-visible {
+            color: #22d3ee;
+        }
+
         html.dark .user-greeting-badge:not(:empty) {
             background: #1e293b;
             border-color: #475569;
             color: #f1f5f9;
-        }
-
-        html.dark .welcome-user-badge {
-            border-color: rgba(0, 229, 255, 0.3);
-            background: rgba(8, 12, 14, 0.82);
-            color: #a5f3fc;
         }
 
         html:not(.dark) body input,
