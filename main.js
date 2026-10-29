@@ -74,11 +74,6 @@ window.AerialUserSession = {
     },
     updateGreeting(name = readStoredUserName()) {
         updateHeaderGreeting();
-        const mobileGreeting = document.getElementById('welcome-user-badge-mobile');
-        if (mobileGreeting) {
-            mobileGreeting.textContent = name ? `Welcome, ${name}` : '';
-            mobileGreeting.classList.toggle('hidden', !name);
-        }
     },
     fillNameFields() {
         const name = readStoredUserName();
@@ -163,16 +158,13 @@ window.AerialUserSession = {
 
         function updateThemeUI(isDark) {
             const icon = document.getElementById('theme-toggle-icon');
-            const iconMobile = document.getElementById('theme-toggle-icon-mobile');
 
             if (isDark) {
                 html.classList.add('dark');
                 if (icon) icon.className = 'fa-solid fa-sun text-yellow-400 text-lg';
-                if (iconMobile) iconMobile.className = 'fa-solid fa-sun text-yellow-400 text-base';
             } else {
                 html.classList.remove('dark');
                 if (icon) icon.className = 'fa-solid fa-moon text-slate-700 text-lg';
-                if (iconMobile) iconMobile.className = 'fa-solid fa-moon text-slate-700 text-base';
             }
 
             try {
@@ -204,9 +196,7 @@ window.AerialUserSession = {
             updateHeaderGreeting();
             window.AerialUserSession.updateGreeting();
             const themeBtn = document.getElementById('theme-toggle');
-            const themeBtnMobile = document.getElementById('theme-toggle-mobile');
             if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-            if (themeBtnMobile) themeBtnMobile.addEventListener('click', toggleTheme);
 
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -229,6 +219,7 @@ window.AerialUserSession = {
             setVisitorAccessLocked(!returningVisitor);
             window.AerialUserSession.fillNameFields();
             window.AerialUserSession.scrollToHome();
+            initLazy3DViewer();
             const termsNameInput = document.getElementById('terms-full-name');
             const termsCheckbox = document.getElementById('terms-accept-checkbox');
             const updateTermsAcceptButton = () => {
@@ -602,8 +593,10 @@ window.AerialUserSession = {
             activeTermsFormId = formId;
             termsTriggerElement = document.activeElement;
             document.getElementById('terms-consent-form').reset();
-            document.getElementById('terms-full-name').value = window.AerialUserSession.getName();
-            document.getElementById('terms-accept-button').disabled = true;
+            const nameInput = document.getElementById('terms-full-name');
+            nameInput.value = window.AerialUserSession.getName();
+            document.getElementById('terms-accept-button').disabled =
+                !nameInput.value.trim() || !document.getElementById('terms-accept-checkbox').checked;
             document.getElementById('terms-consent-status').textContent = '';
             document.body.classList.add('modal-open');
             Array.from(document.body.children).forEach(element => {
@@ -664,8 +657,10 @@ window.AerialUserSession = {
                 localStorage.setItem(key, JSON.stringify(logs));
                 const nameInput = document.getElementById('terms-full-name');
                 const userName = nameInput.value.trim();
-                if (userName) localStorage.setItem('aerial_user_name', userName);
-                window.AerialUserSession.markTermsAccepted(fullName);
+                if (!window.AerialUserSession.saveName(userName)) {
+                    throw new Error('The consent name could not be saved in this browser.');
+                }
+                window.AerialUserSession.markTermsAccepted(userName);
                 updateHeaderGreeting();
             } catch (error) {
                 console.warn('Terms consent could not be recorded in this browser.', error);

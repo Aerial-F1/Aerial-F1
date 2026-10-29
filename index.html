@@ -40,7 +40,7 @@
         }
     </script>
 
-    <link rel="stylesheet" href="style.css?v=20261026-3">
+    <link rel="stylesheet" href="style.css?v=20261029-3">
 </head>
 <body class="modal-open min-h-screen flex flex-col justify-between carbon-grid bg-white dark:bg-black text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
@@ -52,14 +52,14 @@
                 
                 <a href="#home" class="flex items-center space-x-3 group">
                     <div class="flex flex-col">
-                        <span class="font-orbitron font-black text-2xl sm:text-3xl tracking-widest text-slate-900 dark:text-white leading-none">
+                        <span class="font-orbitron font-black text-xl sm:text-3xl tracking-widest text-slate-900 dark:text-white leading-none">
                             AERIAL <span class="text-turquoise-bright">F1</span>
                         </span>
                         <span class="text-[9px] text-cyan-600 dark:text-cyan-400/80 tracking-widest uppercase font-mono mt-1">THE INDIAN HIGH SCHOOL, OUD METHA</span>
                     </div>
                 </a>
 
-                <div class="hidden lg:flex space-x-6 font-racing uppercase tracking-wider text-sm font-semibold">
+                <div class="hidden xl:flex space-x-6 font-racing uppercase tracking-wider text-sm font-semibold">
                     <a href="#home" class="text-cyan-600 dark:text-cyan-400 hover:text-black dark:hover:text-white transition-colors">Home</a>
                     <a href="#about" class="text-slate-600 dark:text-gray-300 hover:text-cyan-500 transition-colors">About Us</a>
                     <a href="#bonafide" class="hidden 2xl:inline-flex text-slate-600 dark:text-gray-300 hover:text-cyan-500 transition-colors">Bonafide</a>
@@ -69,30 +69,24 @@
                     <a href="#contact" class="text-slate-600 dark:text-gray-300 hover:text-cyan-500 transition-colors">Contact</a>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4">
+                <div class="nav-actions flex items-center gap-2 sm:gap-4">
+                    <span id="user-greeting" class="user-greeting-badge" aria-live="polite"></span>
                     <button id="theme-toggle" class="w-10 h-10 rounded-full border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-400/20 flex items-center justify-center transition-all cursor-pointer" title="Toggle Light/Dark Theme">
                         <i id="theme-toggle-icon" class="fa-solid fa-moon text-lg"></i>
                     </button>
-                    <span id="user-greeting" class="user-greeting-badge" aria-live="polite"></span>
 
-                    <div class="flex items-center space-x-3 border-r border-cyan-400/30 pr-4 text-slate-600 dark:text-gray-300">
+                    <div class="hidden xl:flex items-center space-x-3 border-r border-cyan-400/30 pr-4 text-slate-600 dark:text-gray-300">
                         <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-500 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
                         <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-500 transition"><i class="fa-brands fa-youtube text-lg"></i></a>
                         <a href="https://www.tiktok.com/@aerial.f1" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-500 transition"><i class="fa-brands fa-tiktok text-lg"></i></a>
                         <a href="mailto:aerialteam.f1@gmail.com" class="hover:text-cyan-500 transition"><i class="fa-solid fa-envelope text-lg"></i></a>
+                        <a href="https://discord.gg/2uSMc7vsC" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-500 transition" aria-label="Join Aerial F1 on Discord"><i class="fa-brands fa-discord text-lg" aria-hidden="true"></i></a>
                     </div>
 
-                    <button onclick="openSponsorModal('Title Partner')" class="skew-box bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 text-white dark:text-black font-racing font-extrabold px-5 py-2 text-xs uppercase tracking-wider transition-all duration-300 glow-turquoise-sm border border-cyan-400">
+                    <button onclick="openSponsorModal('Title Partner')" class="hidden xl:inline-flex skew-box bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-400 text-white dark:text-black font-racing font-extrabold px-5 py-2 text-xs uppercase tracking-wider transition-all duration-300 glow-turquoise-sm border border-cyan-400">
                         <span class="unskew-box block"><i class="fa-solid fa-handshake mr-1.5"></i>Sponsor Us</span>
                     </button>
-                </div>
-
-                <div class="lg:hidden flex items-center space-x-3">
-                    <span id="welcome-user-badge-mobile" class="welcome-user-badge hidden max-w-28 truncate" aria-live="polite"></span>
-                    <button id="theme-toggle-mobile" class="w-9 h-9 rounded-full border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
-                        <i id="theme-toggle-icon-mobile" class="fa-solid fa-moon text-base"></i>
-                    </button>
-                    <button id="mobile-menu-btn" class="text-cyan-500 text-2xl focus:outline-none" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu">
+                    <button id="mobile-menu-btn" class="xl:hidden text-cyan-500 text-2xl focus:outline-none" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
@@ -101,7 +95,7 @@
 
     </nav>
 
-    <div id="mobile-menu" class="hidden lg:hidden fixed inset-x-0 top-20 bottom-0 z-40 overflow-y-auto bg-white/95 dark:bg-black/95 border-b border-cyan-400/30 px-6 pt-6 pb-10 space-y-3 font-racing text-center">
+    <div id="mobile-menu" class="hidden xl:hidden fixed inset-x-0 top-20 bottom-0 z-40 overflow-y-auto bg-white/95 dark:bg-black/95 border-b border-cyan-400/30 px-6 pt-6 pb-10 space-y-3 font-racing text-center">
         <a href="#home" class="block text-cyan-500 py-2 font-bold uppercase text-lg">Home</a>
         <a href="#about" class="block text-slate-700 dark:text-gray-300 py-2 uppercase text-lg">About Us</a>
         <a href="#bonafide" class="block text-slate-700 dark:text-gray-300 py-2 uppercase text-lg">Bonafide</a>
@@ -520,6 +514,13 @@
     <!-- FOOTER -->
     <footer class="border-t border-cyan-500/30 dark:border-cyan-400/30 py-8 text-center text-xs text-slate-500 dark:text-gray-400 font-mono">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
+            <nav class="footer-social-links" aria-label="Aerial F1 social links">
+                <a href="https://www.instagram.com/aerial.team_f1/" target="_blank" rel="noopener noreferrer" aria-label="Aerial F1 on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://www.youtube.com/@Aerial.Team_F1" target="_blank" rel="noopener noreferrer" aria-label="Aerial F1 on YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                <a href="https://www.tiktok.com/@aerial.f1" target="_blank" rel="noopener noreferrer" aria-label="Aerial F1 on TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
+                <a href="mailto:aerialteam.f1@gmail.com" aria-label="Email Aerial F1"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+                <a href="https://discord.gg/2uSMc7vsC" target="_blank" rel="noopener noreferrer" aria-label="Join Aerial F1 on Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a>
+            </nav>
             <p>© 2026 Aerial F1 - The Indian High School, Oud Metha. Website designed & developed by Navtej Tharayil.</p>
             <p>AI tools were used to assist with website creation.</p>
         </div>
@@ -678,6 +679,6 @@
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
-    <script src="main.js?v=20261026-3" defer></script>
+    <script src="main.js?v=20261029-3" defer></script>
 </body>
 </html>
